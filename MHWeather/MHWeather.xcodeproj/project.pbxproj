@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BB8EC151D0AF134000BDD3C /* MHWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC141D0AF134000BDD3C /* MHWeatherModel.m */; };
+		8BB8EC1A1D0B00E5000BDD3C /* MHSelectCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */; };
+		8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC1C1D0B0752000BDD3C /* MHSelectCityView.m */; };
 		8BE3E2F91D0AE93600067446 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2F81D0AE93600067446 /* main.m */; };
 		8BE3E2FC1D0AE93600067446 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2FB1D0AE93600067446 /* AppDelegate.m */; };
 		8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2FE1D0AE93600067446 /* ViewController.m */; };
@@ -35,6 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8BB8EC131D0AF134000BDD3C /* MHWeatherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWeatherModel.h; sourceTree = "<group>"; };
+		8BB8EC141D0AF134000BDD3C /* MHWeatherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWeatherModel.m; sourceTree = "<group>"; };
+		8BB8EC181D0B00E5000BDD3C /* MHSelectCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSelectCity.h; sourceTree = "<group>"; };
+		8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSelectCity.m; sourceTree = "<group>"; };
+		8BB8EC1B1D0B0752000BDD3C /* MHSelectCityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSelectCityView.h; sourceTree = "<group>"; };
+		8BB8EC1C1D0B0752000BDD3C /* MHSelectCityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSelectCityView.m; sourceTree = "<group>"; };
 		8BE3E2F41D0AE93600067446 /* MHWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MHWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE3E2F81D0AE93600067446 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BE3E2FA1D0AE93600067446 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -78,6 +87,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8BB8EC121D0AF108000BDD3C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8BB8EC131D0AF134000BDD3C /* MHWeatherModel.h */,
+				8BB8EC141D0AF134000BDD3C /* MHWeatherModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		8BB8EC161D0B0081000BDD3C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8BB8EC1B1D0B0752000BDD3C /* MHSelectCityView.h */,
+				8BB8EC1C1D0B0752000BDD3C /* MHSelectCityView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		8BB8EC171D0B008A000BDD3C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8BB8EC181D0B00E5000BDD3C /* MHSelectCity.h */,
+				8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */,
+				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
+				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		8BE3E2EB1D0AE93500067446 = {
 			isa = PBXGroup;
 			children = (
@@ -101,10 +139,11 @@
 		8BE3E2F61D0AE93600067446 /* MHWeather */ = {
 			isa = PBXGroup;
 			children = (
+				8BB8EC171D0B008A000BDD3C /* Controller */,
+				8BB8EC161D0B0081000BDD3C /* View */,
+				8BB8EC121D0AF108000BDD3C /* Model */,
 				8BE3E2FA1D0AE93600067446 /* AppDelegate.h */,
 				8BE3E2FB1D0AE93600067446 /* AppDelegate.m */,
-				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
-				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
 				8BE3E3001D0AE93600067446 /* Main.storyboard */,
 				8BE3E3031D0AE93600067446 /* Assets.xcassets */,
 				8BE3E3051D0AE93600067446 /* LaunchScreen.storyboard */,
@@ -270,9 +309,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */,
 				8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */,
+				8BB8EC151D0AF134000BDD3C /* MHWeatherModel.m in Sources */,
 				8BE3E2FC1D0AE93600067446 /* AppDelegate.m in Sources */,
 				8BE3E2F91D0AE93600067446 /* main.m in Sources */,
+				8BB8EC1A1D0B00E5000BDD3C /* MHSelectCity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +538,7 @@
 				8BE3E3231D0AE93600067446 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BE3E3241D0AE93600067446 /* Build configuration list for PBXNativeTarget "MHWeatherTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +547,7 @@
 				8BE3E3261D0AE93600067446 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8BE3E3271D0AE93600067446 /* Build configuration list for PBXNativeTarget "MHWeatherUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +556,7 @@
 				8BE3E3291D0AE93600067446 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
