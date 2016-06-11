@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="AhC-Et-AZA" customClass="MHFutuerWeather">
+            <rect key="frame" x="0.0" y="0.0" width="532" height="73"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-ff-e88" userLabel="日期">
+                    <rect key="frame" x="0.0" y="0.0" width="160" height="37"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39w-yP-EJw" userLabel="星期">
+                    <rect key="frame" x="0.0" y="37" width="160" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sca-Wg-rJe" userLabel="最高最低气温">
+                    <rect key="frame" x="367" y="0.0" width="160" height="73"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gJe-9k-k5k" userLabel="天气图标">
+                    <rect key="frame" x="317" y="17" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="146-zh-Uub"/>
+                        <constraint firstAttribute="height" constant="40" id="dmj-mL-QGH"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="mlA-ff-e88" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="06d-pE-Ki6"/>
+                <constraint firstItem="Sca-Wg-rJe" firstAttribute="leading" secondItem="gJe-9k-k5k" secondAttribute="trailing" constant="10" id="1pz-wf-g19"/>
+                <constraint firstItem="Sca-Wg-rJe" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" id="3Ug-Om-R8S"/>
+                <constraint firstItem="Sca-Wg-rJe" firstAttribute="leading" secondItem="gJe-9k-k5k" secondAttribute="trailing" constant="83" id="9F6-6L-1FN"/>
+                <constraint firstAttribute="bottom" secondItem="39w-yP-EJw" secondAttribute="bottom" id="Ffb-Dc-MBe"/>
+                <constraint firstItem="Sca-Wg-rJe" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="R0V-7m-LVR"/>
+                <constraint firstItem="mlA-ff-e88" firstAttribute="leading" secondItem="AhC-Et-AZA" secondAttribute="leading" id="YNU-6L-3uS"/>
+                <constraint firstItem="gJe-9k-k5k" firstAttribute="centerY" secondItem="AhC-Et-AZA" secondAttribute="centerY" id="YTv-wu-riB"/>
+                <constraint firstItem="39w-yP-EJw" firstAttribute="leading" secondItem="AhC-Et-AZA" secondAttribute="leading" id="eqt-Je-MqU"/>
+                <constraint firstItem="39w-yP-EJw" firstAttribute="height" secondItem="AhC-Et-AZA" secondAttribute="height" multiplier="0.5" id="k1a-oO-eco"/>
+                <constraint firstAttribute="trailing" secondItem="Sca-Wg-rJe" secondAttribute="trailing" constant="5" id="kmh-9z-mWN"/>
+                <constraint firstAttribute="bottom" secondItem="Sca-Wg-rJe" secondAttribute="bottom" id="lf5-a0-2cF"/>
+                <constraint firstItem="mlA-ff-e88" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" id="oQl-3T-lY9"/>
+                <constraint firstItem="39w-yP-EJw" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="qaG-4b-a1b"/>
+                <constraint firstItem="mlA-ff-e88" firstAttribute="height" secondItem="AhC-Et-AZA" secondAttribute="height" multiplier="0.5" id="wcL-80-6pG"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="9F6-6L-1FN"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-7" y="-90.5"/>
+        </view>
+    </objects>
+</document>
