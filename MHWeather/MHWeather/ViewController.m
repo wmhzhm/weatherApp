@@ -11,6 +11,8 @@
 #import "MHCurrentWeatherModel.h"
 #import "MHFutuerWeatherModel.h"
 #import "MHFutuerWeather.h"
+#import "MHIndexModel.h"
+#import "MHIndexView.h"
 
 @class MHFutuerWeather;
 @interface ViewController ()
@@ -21,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *currentTypeImg;//当前类型图片
 @property (weak, nonatomic) IBOutlet UILabel *currentTypeLabel;//当前天气类型
 @property (weak, nonatomic) IBOutlet UILabel *tempScope;//温度范围
+@property (weak, nonatomic) IBOutlet UILabel *indexBtn;//指标跳转按钮
+@property (weak, nonatomic) IBOutlet UIView *todayIndexView;//今日指数视图
+
 
 
 @property (strong ,nonatomic) NSArray *futuerWeatherData;//未来天气数据
@@ -42,7 +47,10 @@
     
     //创建未来天气View内部视图
     [self initSmallView];
+    //创建生活指数内部视图
+    [self initLiveIndexView];
 }
+
 //加载未来天气视图
 - (void)initSmallView
 {
@@ -58,31 +66,49 @@
         [self.futureWeatherView addSubview:futureWeatherView];
         futureWeatherView.frame = CGRectMake(appX, appY, appW, appH);
         
+        //背景图片
+        UIImageView *bagImage = futureWeatherView.subviews[0];
+        bagImage.image = [UIImage imageNamed:@"cell背景"];
+        bagImage.alpha = 0.8;
         //日期
-        UILabel *dateLabel = futureWeatherView.subviews[0];
+        UILabel *dateLabel = futureWeatherView.subviews[1];
         dateLabel.text = @"--";
         //星期
-        UILabel *weekLabel = futureWeatherView.subviews[1];
+        UILabel *weekLabel = futureWeatherView.subviews[2];
         weekLabel.text = @"--";
         //最高最低气温
-        UILabel *tempLabel = futureWeatherView.subviews[2];
+        UILabel *tempLabel = futureWeatherView.subviews[3];
         tempLabel.text = @"-- ~ --";
         //天气图标
         //天气类型
-        UILabel *typeLabel = futureWeatherView.subviews[4];
+        UILabel *typeLabel = futureWeatherView.subviews[5];
         typeLabel.text = @"--";
-        //背景图片
-        UIImageView *bagImage = futureWeatherView.subviews[5];
-        bagImage.image = [UIImage imageNamed:@"cell背景"];
-        bagImage.alpha = 0.5;
     }
 
 }
 
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
+- (void)initLiveIndexView
+{
+    CGFloat appX = 0;
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGFloat appW = rect.size.width;
+    CGFloat appH = self.todayIndexView.bounds.size.height / 4;
+    for (int n = 0; n < 4; n++) {
+        CGFloat appY = n * appH;
+        NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHIndexView" owner:nil options:nil];
+        UIView *indexView = [objs lastObject];
+        [self.todayIndexView addSubview:indexView];
+        indexView.frame = CGRectMake(appX, appY, appW, appH);
+        //背景图已预设
+        //
+    }
+    
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 //收到回调的城市模型
 - (void)registerCompletion:(NSNotification *)notification
@@ -112,6 +138,8 @@
     [self setCurrentWeatherData];
     //未来天气数据
     [self setFutureWeatherData];
+    //当天生活指数
+    [self setTodayIndexData];
 }
 
 
@@ -129,10 +157,29 @@
     self.currentTypeLabel.text = self.currentWeatherModel.type;
     //最高最低气温
     self.tempScope.text = [NSString stringWithFormat:@"%@ ~ %@",self.currentWeatherModel.lowtemp,self.currentWeatherModel.hightemp];
+    //加载指数模型
     
     
 }
 
+
+//设置生活指数数据
+- (void)setTodayIndexData
+{
+    int i = 0;
+    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHIndexView" owner:nil options:nil];
+    MHIndexView *indexView = [objs lastObject];
+    for (indexView in [self.todayIndexView subviews]) {
+            MHIndexModel *model = self.indexArray[i];
+            i++;
+            //图标
+            indexView.indexImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",model.name]];
+            //类型
+            indexView.indexName.text = model.name;
+            //程度
+            indexView.index.text = model.index;
+    }
+}
 
 //设置未来天气数据
 - (void)setFutureWeatherData
@@ -179,6 +226,25 @@
                                    
                                    //获取当前天气模型
                                    self.currentWeatherModel = [[MHCurrentWeatherModel alloc] initWithDict:[[dict objectForKey:@"retData"] objectForKey:@"today"]];
+                                   
+                                   //获取指数模型数组
+                                   NSMutableArray *mIndexArray = [NSMutableArray array];
+                                   for (NSDictionary *dict in self.currentWeatherModel.index) {
+                                       MHIndexModel *indexModel = [[MHIndexModel alloc] initWithDict:dict];
+                                       [mIndexArray addObject:indexModel];
+                                   }
+                                   self.indexArray = [mIndexArray copy];
+                                   //过滤指数
+                                   [mIndexArray removeAllObjects];
+                                   for (int i = 0; i < self.indexArray.count; i++) {
+                                       MHIndexModel *model = self.indexArray[i];
+                                     if (![model.code  isEqualToString:@"gm"] && ![model.code isEqualToString:@"ls"])
+                                     {
+                                         [mIndexArray addObject:model];
+                                     }
+                                   }
+                                   
+                                   self.indexArray = [mIndexArray copy];
                                    //获取未来天气模型
                                   self.futuerWeatherData = [[dict objectForKey:@"retData"] objectForKey:@"forecast"];
                                    

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B4B86D11D0E582900697482 /* MHIPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4B86D01D0E582900697482 /* MHIPModel.m */; };
+		8BA201011D110187003FCA9F /* MHIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA201001D110187003FCA9F /* MHIndexView.m */; };
+		8BA201031D11019E003FCA9F /* MHIndexView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA201021D11019E003FCA9F /* MHIndexView.xib */; };
 		8BB8EC1A1D0B00E5000BDD3C /* MHSelectCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */; };
 		8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC1C1D0B0752000BDD3C /* MHSelectCityView.m */; };
 		8BB8EC201D0BE753000BDD3C /* MHCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC1F1D0BE753000BDD3C /* MHCityModel.m */; };
@@ -44,8 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8B4B86CF1D0E582900697482 /* MHIPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHIPModel.h; sourceTree = "<group>"; };
-		8B4B86D01D0E582900697482 /* MHIPModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHIPModel.m; sourceTree = "<group>"; };
+		8BA200FF1D110187003FCA9F /* MHIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHIndexView.h; sourceTree = "<group>"; };
+		8BA201001D110187003FCA9F /* MHIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHIndexView.m; sourceTree = "<group>"; };
+		8BA201021D11019E003FCA9F /* MHIndexView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHIndexView.xib; sourceTree = "<group>"; };
 		8BB8EC181D0B00E5000BDD3C /* MHSelectCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSelectCity.h; sourceTree = "<group>"; };
 		8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSelectCity.m; sourceTree = "<group>"; };
 		8BB8EC1B1D0B0752000BDD3C /* MHSelectCityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSelectCityView.h; sourceTree = "<group>"; };
@@ -122,8 +124,6 @@
 				8BB8EC251D0C0E56000BDD3C /* MHIndexModel.m */,
 				8BB8EC2C1D0C735C000BDD3C /* MHFutuerWeatherModel.h */,
 				8BB8EC2D1D0C735C000BDD3C /* MHFutuerWeatherModel.m */,
-				8B4B86CF1D0E582900697482 /* MHIPModel.h */,
-				8B4B86D01D0E582900697482 /* MHIPModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -136,6 +136,9 @@
 				8BB8EC291D0C70E0000BDD3C /* MHFutuerWeather.h */,
 				8BB8EC2A1D0C70E0000BDD3C /* MHFutuerWeather.m */,
 				8BB8EC271D0C70C8000BDD3C /* MHFutuerWeather.xib */,
+				8BA200FF1D110187003FCA9F /* MHIndexView.h */,
+				8BA201001D110187003FCA9F /* MHIndexView.m */,
+				8BA201021D11019E003FCA9F /* MHIndexView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				8BB8EC281D0C70C8000BDD3C /* MHFutuerWeather.xib in Resources */,
 				8BE3E3071D0AE93600067446 /* LaunchScreen.storyboard in Resources */,
 				8BE3E3041D0AE93600067446 /* Assets.xcassets in Resources */,
+				8BA201031D11019E003FCA9F /* MHIndexView.xib in Resources */,
 				8BE3E3021D0AE93600067446 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,10 +352,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */,
-				8B4B86D11D0E582900697482 /* MHIPModel.m in Sources */,
 				8BB8EC231D0C0A87000BDD3C /* MHCurrentWeatherModel.m in Sources */,
 				8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */,
 				8BE3E2FC1D0AE93600067446 /* AppDelegate.m in Sources */,
+				8BA201011D110187003FCA9F /* MHIndexView.m in Sources */,
 				8BB8EC201D0BE753000BDD3C /* MHCityModel.m in Sources */,
 				8BE3E2F91D0AE93600067446 /* main.m in Sources */,
 				8BB8EC2E1D0C735C000BDD3C /* MHFutuerWeatherModel.m in Sources */,
