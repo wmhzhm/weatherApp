@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MHFutuerWeatherModel.h"
 
 @interface MHFutuerWeather : UIView
+@property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UILabel *week;
+@property (weak, nonatomic) IBOutlet UILabel *temp;
+@property (weak, nonatomic) IBOutlet UIImageView *typeImage;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
+- (void)loadWithModel:(MHFutuerWeatherModel *)model;
 @end
