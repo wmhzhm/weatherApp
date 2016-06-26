@@ -18,18 +18,31 @@
     // Drawing code
 }
 */
-- (void)loadWithModel:(MHFutuerWeatherModel *)model
+- (void)setFutureWeather:(MHFutuerWeatherModel *)futureWeather
 {
-    
     //日期
-    self.date.text = model.date;
+    self.date.text = futureWeather.date;
     //星期
-    self.week.text = model.week;
+    self.week.text = futureWeather.week;
     //最高最低气温
-     self.temp.text = [NSString stringWithFormat:@"%@ ~ %@",model.lowtemp,model.hightemp];
+    self.temp.text = [NSString stringWithFormat:@"%@ ~ %@",futureWeather.lowtemp,futureWeather.hightemp];
     //天气图标
-    self.typeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",model.type]];
+    self.typeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",futureWeather.type]];
     //天气类型
-     self.typeLabel.text = model.type;
+    self.typeLabel.text = futureWeather.type;
+
+}
+
++ (instancetype)futureWeatherCellWithTableView:(UITableView *)tableView
+{
+    static  NSString  *ID = @"futureWeatherCell";
+    MHFutuerWeather  *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"MHFutuerWeather" owner:nil options:nil];
+        cell = [nibs firstObject];
+        cell.backgroundColor = [UIColor clearColor];
+    }
+    return cell;
 }
 @end
+

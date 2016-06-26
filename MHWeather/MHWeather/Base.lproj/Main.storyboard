@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Xnc-2I-ETJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,6 +7,24 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="M41-om-tGT">
+            <objects>
+                <viewController id="Xnc-2I-ETJ" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iCM-ag-Uqn"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tdu-fd-CiI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xBt-48-MIS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VrE-b7-qcq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="382" y="653"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -145,21 +163,21 @@
                         <constraints>
                             <constraint firstItem="Odu-zT-tpc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Qp-jX-Wy7"/>
                             <constraint firstItem="B7P-Ui-Ru3" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="9l6-RC-APS"/>
+                            <constraint firstItem="B7P-Ui-Ru3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="CZq-ao-ELp"/>
                             <constraint firstItem="4tu-Tp-ofq" firstAttribute="top" secondItem="LAY-hm-R8k" secondAttribute="bottom" id="Etc-m9-ITn"/>
                             <constraint firstItem="uO5-55-EFO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Gmd-X6-gbh"/>
                             <constraint firstItem="uO5-55-EFO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="HYW-gM-jsW"/>
                             <constraint firstItem="pPc-II-gU2" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Rhj-GI-SKD"/>
                             <constraint firstItem="Odu-zT-tpc" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="SgM-Ux-xLU"/>
                             <constraint firstItem="pPc-II-gU2" firstAttribute="top" secondItem="B7P-Ui-Ru3" secondAttribute="bottom" id="VQV-no-Pk7"/>
-                            <constraint firstItem="B7P-Ui-Ru3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="W6r-rC-Ngv"/>
                             <constraint firstItem="pPc-II-gU2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="acI-34-3go"/>
                             <constraint firstItem="uO5-55-EFO" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="asg-Qn-hiZ"/>
                             <constraint firstItem="Odu-zT-tpc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="b8E-sx-HFP"/>
                             <constraint firstItem="4tu-Tp-ofq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cgL-t4-fnU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LAY-hm-R8k" secondAttribute="trailing" constant="10" id="dsD-FY-vFR"/>
                             <constraint firstItem="uO5-55-EFO" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="e84-5F-r6s"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Odu-zT-tpc" secondAttribute="bottom" id="eXI-Kn-woA"/>
                             <constraint firstItem="LAY-hm-R8k" firstAttribute="top" secondItem="pPc-II-gU2" secondAttribute="bottom" constant="2" id="gJA-hl-B0S"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Odu-zT-tpc" secondAttribute="bottom" id="p5a-s0-obf"/>
                             <constraint firstItem="4tu-Tp-ofq" firstAttribute="height" secondItem="Odu-zT-tpc" secondAttribute="height" multiplier="1.8" id="peT-Wg-WMc"/>
                             <constraint firstItem="LAY-hm-R8k" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="rxS-Eb-z3T"/>
                             <constraint firstItem="Odu-zT-tpc" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="xjx-SZ-7Fe"/>
@@ -176,11 +194,12 @@
                         <outlet property="searchCityBtn" destination="B7P-Ui-Ru3" id="eu3-dS-0Zz"/>
                         <outlet property="tempScope" destination="sLU-h7-cte" id="l6K-kU-MrA"/>
                         <outlet property="todayIndexView" destination="TLd-Z4-iv4" id="kFy-0P-rlg"/>
+                        <outlet property="todayWeatherScroller" destination="4tu-Tp-ofq" id="NZI-Za-Kyo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="357" y="40"/>
+            <point key="canvasLocation" x="382" y="-149"/>
         </scene>
         <!--Select City-->
         <scene sceneID="qLb-y3-dgZ">
@@ -282,7 +301,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wQx-Db-XMn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1408" y="69"/>
+            <point key="canvasLocation" x="1371" y="-105"/>
         </scene>
     </scenes>
     <resources>

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MHCityModel.h"
 
 @interface MHSelectCity : UIViewController
 
++ (MHCityModel *)cityModelWithCityName:(NSString *)city;
+
++ (MHCityModel *)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city;
 @end

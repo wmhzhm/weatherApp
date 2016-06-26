@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MHFutuerWeatherModel.h"
 
-@interface MHFutuerWeather : UIView
+@interface MHFutuerWeather : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *week;
 @property (weak, nonatomic) IBOutlet UILabel *temp;
 @property (weak, nonatomic) IBOutlet UIImageView *typeImage;
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+@property (strong ,nonatomic) MHFutuerWeatherModel *futureWeather;
 
-- (void)loadWithModel:(MHFutuerWeatherModel *)model;
++ (instancetype)futureWeatherCellWithTableView:(UITableView *)tableView;
 @end
