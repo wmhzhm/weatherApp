@@ -56,9 +56,6 @@
                                     <constraint firstAttribute="width" constant="25" id="ivr-7B-kJS"/>
                                 </constraints>
                                 <state key="normal" image="数值加"/>
-                                <connections>
-                                    <segue destination="8Nk-4g-zO0" kind="show" id="ecr-ut-3Jo"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LAY-hm-R8k" userLabel="上分割线">
                                 <rect key="frame" x="30" y="82" width="540" height="1"/>
@@ -66,10 +63,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="mjI-HE-AHs"/>
                                 </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Odu-zT-tpc" userLabel="未来天气">
-                                <rect key="frame" x="0.0" y="420" width="600" height="180"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tu-Tp-ofq" userLabel="今日天气">
                                 <rect key="frame" x="20" y="83" width="560" height="324"/>
@@ -158,6 +151,10 @@
                                     <constraint firstItem="MZs-Ox-1RE" firstAttribute="leading" secondItem="4tu-Tp-ofq" secondAttribute="leading" id="vYP-7M-qz8"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Odu-zT-tpc" userLabel="未来天气">
+                                <rect key="frame" x="62" y="420" width="600" height="180"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -204,7 +201,7 @@
         <!--Select City-->
         <scene sceneID="qLb-y3-dgZ">
             <objects>
-                <viewController id="8Nk-4g-zO0" customClass="MHSelectCity" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RightWin" id="8Nk-4g-zO0" customClass="MHSelectCity" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4t3-uM-Mej"/>
                         <viewControllerLayoutGuide type="bottom" id="6Ll-wa-vAS"/>
@@ -273,7 +270,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="F0Y-sm-BVI" secondAttribute="trailing" constant="10" id="14Y-EC-ZvM"/>
                             <constraint firstItem="8Kz-qm-rg2" firstAttribute="top" secondItem="4t3-uM-Mej" secondAttribute="bottom" constant="5" id="1Fz-Rv-xQA"/>
@@ -301,7 +298,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wQx-Db-XMn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1371" y="-105"/>
+            <point key="canvasLocation" x="1300" y="-98"/>
         </scene>
     </scenes>
     <resources>

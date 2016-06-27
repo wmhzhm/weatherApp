@@ -90,8 +90,9 @@
     //弹出模态视图选择城市
     MHSelectCity * selectCity = [[MHSelectCity alloc]init];
     selectCity.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [self presentViewController:selectCity animated:YES completion:nil];
+    MHSelectCity *view = [self.storyboard instantiateViewControllerWithIdentifier:@"RightWin"];
+//    [self presentViewController:selectCity animated:YES completion:nil];
+    [self presentViewController:view animated:YES completion:nil];
 }
 
 
