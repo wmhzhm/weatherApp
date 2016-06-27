@@ -13,28 +13,32 @@
 #import "MHFutuerWeather.h"
 #import "MHIndexModel.h"
 #import "MHIndexView.h"
+#import "MHWeatherView.h"
+#import "MHSQLiteTool.h"
+#import "MHSelectCity.h"
+#import "MHHeaderView.h"
+
+#define ScrollTableWidth [UIScreen mainScreen].bounds.size.width
+#define ScrollTableHeight [UIScreen mainScreen].bounds.size.height
+@interface ViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (strong ,nonatomic) UIScrollView *scrollView;
+@property (strong ,nonatomic) UIPageControl *pageControl;
+@property (strong ,nonatomic) NSArray *cityArray;
+@property (nonatomic,strong) NSDictionary *leftArr;
+@property (nonatomic,strong) NSDictionary *midArr;
+@property (nonatomic,strong) NSDictionary *rigthArr;
+@property (nonatomic,assign) NSInteger currentIndex;//当前的序列
+@property (strong ,nonatomic) NSMutableArray *mDataArray;//所有天气数据
+@property (strong ,nonatomic) NSArray *dataArray;
+@property (strong ,nonatomic) MHHeaderView *leftHeadView;
+@property (strong ,nonatomic) MHHeaderView *midHeadView;
+@property (strong ,nonatomic) MHHeaderView *rightHeadView;
 
 
-@interface ViewController ()
-//@property (weak, nonatomic) IBOutlet UIButton *searchCityBtn;//搜索城市按钮
-//@property (weak, nonatomic) IBOutlet UILabel *currentCityLabel;//当前城市Label
-//@property (weak, nonatomic) IBOutlet UIView *futureWeatherView;//未来天气视图
-//@property (weak, nonatomic) IBOutlet UILabel *currentTemp;//当前温度
-//@property (weak, nonatomic) IBOutlet UIImageView *currentTypeImg;//当前类型图片
-//@property (weak, nonatomic) IBOutlet UILabel *currentTypeLabel;//当前天气类型
-//@property (weak, nonatomic) IBOutlet UILabel *tempScope;//温度范围
-//@property (weak, nonatomic) IBOutlet UILabel *indexBtn;//指标跳转按钮
-//@property (weak, nonatomic) IBOutlet UIView *todayIndexView;//今日指数视图
-//@property (weak, nonatomic) IBOutlet UIScrollView *todayWeatherScroller;
-//
-//
-//
-//@property (strong ,nonatomic) NSArray *futuerWeatherData;//未来天气数据
-//@property (strong ,nonatomic) NSArray *futureWeatherArray;
-//@property (copy ,nonatomic) NSString *currentCityName;//当前城市名
-//@property (strong ,nonatomic) MHCityModel *cityModel;//城市模型
-//@property (strong ,nonatomic) MHCurrentWeatherModel *currentWeatherModel;//当前天气模型
-//@property (strong ,nonatomic) NSArray *indexArray;//指标模型数组
+@property (strong ,nonatomic) UITableView *leftTableView;
+@property (strong ,nonatomic) UITableView *midTableView;
+@property (strong ,nonatomic) UITableView *rightTableView;
+
 
 @end
 
@@ -42,231 +46,378 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    //设置查询城市观察者
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerCompletion:) name:@"RegistreCompletionNotification" object:nil];
-//    
-//    //创建未来天气View内部视图
-//    [self initSmallView];
-//    //创建生活指数内部视图
-//    [self initLiveIndexView];
+//    self.view.backgroundColor = [UIColor clearColor];
+    //add背景图
+    UIImageView *background = [[UIImageView alloc] init];
+    background.frame = [UIScreen mainScreen].bounds;
+    background.image = [UIImage imageNamed:@"background1"];
+    [self.view addSubview:background];
+    //获取目前需要查询的城市信息
+    self.cityArray = [MHSQLiteTool searchCityArray];
+    //add scrollView
+    CGRect scrollerViewFrame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.scrollView = [[UIScrollView alloc] initWithFrame:scrollerViewFrame];
+    self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor clearColor];
+//    self.scrollView.indicatorStyle = UIScrollViewIndicatorStyleDefault;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
+    
+    //add PageControl
+    CGRect pageControlFrame = CGRectMake(0, SCREEN_HEIGHT - 30, SCREEN_WIDTH, 30);
+    self.pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
+    self.pageControl.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_pageControl];
+    
+    [self loadWeatherView];
+    
+   
+    //测试用btn
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30, 0, 30, 30)];
+    [btn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
+    [btn setImage:[UIImage imageNamed:@"search_city_btn"] forState:UIControlStateNormal];
+    [self.pageControl addSubview:btn];
+    
+    _currentIndex = 0;
+    _mDataArray = [NSMutableArray array];
+    [self getCityArray];
     
 }
 
-//加载未来天气视图
-//- (void)initSmallView
-//{
-//    CGFloat appX = 0;
-//    CGRect rect = [[UIScreen mainScreen] bounds];
-//    CGFloat appW = rect.size.width;
-//     CGFloat appH = rect.size.height * 0.3 / 4;
-//    for (int n = 0; n < 4; n++) {
-////        NSLog(@"外观宽度：%f,%f",appW,appWw);
-//        CGFloat appY = n * appH;
-//        NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHFutuerWeather" owner:nil options:nil];
-//        UIView *futureWeatherView = [objs lastObject];
-//        [self.futureWeatherView addSubview:futureWeatherView];
-//        futureWeatherView.frame = CGRectMake(appX, appY, appW, appH);
+-(void)click
+{
+    //弹出模态视图选择城市
+    MHSelectCity * selectCity = [[MHSelectCity alloc]init];
+    selectCity.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:selectCity animated:YES completion:nil];
+}
+
+
+//获取目前的城市
+- (void)getCityArray{
+    self.cityArray = [[NSArray alloc] init];
+    self.cityArray = [MHSQLiteTool searchCityArray];
+    //得到所有城市的数据
+    for (int i = 0 ; i < _cityArray.count; i ++) {
+        MHCityModel *city = _cityArray[i];
+        [self getDataWithCity:city];
+    }
+    
+}
+
+
+- (void)getDataWithCity:(MHCityModel *)model{
+    NSString *httpUrl = @"http://apis.baidu.com/apistore/weatherservice/recentweathers";
+    NSString *httpArg = [NSString stringWithFormat:@"cityname=%@&cityid=%ld",[model.name_cn stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],model.area_id];
+    
+    [MHSelectCity request:httpUrl withHttpArg:httpArg Return:^(NSDictionary *dict){
+        //获取当前城市
+//        self.currentCityName = [[dict objectForKey:@"retData"] objectForKey:@"city"];
+        
+//        //获取当前天气模型
+//        self.currentWeatherModel = [[MHCurrentWeatherModel alloc] initWithDict:[[dict objectForKey:@"retData"] objectForKey:@"today"]];
 //        
-//        //背景图片
-//        UIImageView *bagImage = futureWeatherView.subviews[0];
-//        bagImage.image = [UIImage imageNamed:@"cell背景"];
-//        bagImage.alpha = 0.8;
-//        //日期
-//        UILabel *dateLabel = futureWeatherView.subviews[1];
-//        dateLabel.text = @"--";
-//        //星期
-//        UILabel *weekLabel = futureWeatherView.subviews[2];
-//        weekLabel.text = @"--";
-//        //最高最低气温
-//        UILabel *tempLabel = futureWeatherView.subviews[3];
-//        tempLabel.text = @"-- ~ --";
-//        //天气图标
-//        //天气类型
-//        UILabel *typeLabel = futureWeatherView.subviews[5];
-//        typeLabel.text = @"--";
-//    }
-//
-//}
-//
-//- (void)initLiveIndexView
-//{
-//    CGFloat appX = 0;
-//    CGRect rect = [[UIScreen mainScreen] bounds];
-//    CGFloat appW = rect.size.width;
-//    CGFloat appH = self.todayIndexView.bounds.size.height / 4;
-//    for (int n = 0; n < 4; n++) {
-//        CGFloat appY = n * appH;
-//        NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHIndexView" owner:nil options:nil];
-//        UIView *indexView = [objs lastObject];
-//        [self.todayIndexView addSubview:indexView];
-//        indexView.frame = CGRectMake(appX, appY, appW, appH);
-//        //背景图已预设
-//    }
-//    
-//}
-//
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
-//
-////收到回调的城市模型
-//- (void)registerCompletion:(NSNotification *)notification
-//{
-//    NSDictionary *dict = [notification userInfo];
-//    
-//    self.cityModel = [[MHCityModel alloc] initWithDict:dict];
-//    [self getDataWithCity:self.cityModel];
-//}
-//
-//- (void)didReceiveMemoryWarning {
-//    [super didReceiveMemoryWarning];
-//    // Dispose of any resources that can be recreated.
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
-//
-//
-//- (void)getDataWithCity:(MHCityModel *)model{
-//    NSString *httpUrl = @"http://apis.baidu.com/apistore/weatherservice/recentweathers";
-//    NSString *httpArg = [NSString stringWithFormat:@"cityname=%@&cityid=%ld",[model.name_cn stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],model.area_id];
-//    [self request: httpUrl withHttpArg: httpArg];
-//}
-//
-////根据当前天气加载数据
-//- (void)loadViewWithcurrentWeatherModel
-//{
-//    //设置当前天气数据
-//    [self setCurrentWeatherData];
-//    //未来天气数据
-//    [self setFutureWeatherData];
-//    //当天生活指数
-//    [self setTodayIndexData];
-//}
-//
-//
-//
-////设置当前天气数据
-//- (void)setCurrentWeatherData
-//{
-//    //设置城市数据
-//    self.currentCityLabel.text = self.currentCityName;
-//    //设置当前温度数据
-//    self.currentTemp.text = [NSString stringWithFormat:@"%@",self.currentWeatherModel.curTemp];
-//    //设置今日天气图标
-//    self.currentTypeImg.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",self.currentWeatherModel.type]];
-//    //天气类型
-//    self.currentTypeLabel.text = self.currentWeatherModel.type;
-//    //最高最低气温
-//    self.tempScope.text = [NSString stringWithFormat:@"%@ ~ %@",self.currentWeatherModel.lowtemp,self.currentWeatherModel.hightemp];
-//    //加载指数模型
-//    
-//    
-//}
-//
-//
-////设置生活指数数据
-//- (void)setTodayIndexData
-//{
-//    int i = 0;
-//    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHIndexView" owner:nil options:nil];
-//    MHIndexView *indexView = [objs lastObject];
-//    for (indexView in [self.todayIndexView subviews]) {
+//        //获取指数模型数组
+//        NSMutableArray *mIndexArray = [NSMutableArray array];
+//        for (NSDictionary *dict in self.currentWeatherModel.index) {
+//            MHIndexModel *indexModel = [[MHIndexModel alloc] initWithDict:dict];
+//            [mIndexArray addObject:indexModel];
+//        }
+//        self.indexArray = [mIndexArray copy];
+//        //过滤指数
+//        [mIndexArray removeAllObjects];
+//        for (int i = 0; i < self.indexArray.count; i++) {
 //            MHIndexModel *model = self.indexArray[i];
-//            i++;
-//            //图标
-//            indexView.indexImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",model.name]];
-//            //类型
-//            indexView.indexName.text = model.name;
-//            //程度
-//            indexView.index.text = model.index;
+//            if (![model.code  isEqualToString:@"gm"] && ![model.code isEqualToString:@"ls"])
+//            {
+//                [mIndexArray addObject:model];
+//            }
+//        }
+//        
+//        self.indexArray = [mIndexArray copy];
+//        //获取未来天气模型
+//        self.futuerWeatherData = [[dict objectForKey:@"retData"] objectForKey:@"forecast"];
+//        
+//        NSMutableArray *mFutuerWeatherArray = [NSMutableArray array];
+//        for (NSDictionary *dictF in self.futuerWeatherData) {
+//            MHFutuerWeatherModel *futureWeatherModel = [[MHFutuerWeatherModel alloc] initWithDict:dictF];
+//            [mFutuerWeatherArray addObject:futureWeatherModel];
+//        }
+//        //获取未来天气模型数组
+//        self.futureWeatherArray = [mFutuerWeatherArray copy];
+        [_mDataArray addObject:dict];
+        _dataArray = _mDataArray;
+        if ([_dataArray count] == [_cityArray count]) {
+            [self changeTableViewAndLoadData];
+        }
+    }];
+}
+
+//根据城市数组加载界面
+- (void)loadWeatherView
+{
+    //创建TableView
+    self.leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
+    self.midTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
+    
+    //创建TableHeaderView
+    _leftHeadView = [MHHeaderView headView];
+    _midHeadView = [MHHeaderView headView];
+    _rightHeadView = [MHHeaderView headView];
+    
+    _leftHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _midHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _rightHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    
+    [_leftTableView setTableHeaderView:_leftHeadView];
+    [_midTableView setTableHeaderView:_midHeadView];
+    [_rightTableView setTableHeaderView:_rightHeadView];
+    
+    
+    _leftTableView.delegate = self;
+    _leftTableView.dataSource = self;
+    _leftTableView.backgroundColor = [UIColor clearColor];
+    _midTableView.delegate = self;
+    _midTableView.dataSource = self;
+    _midTableView.backgroundColor = [UIColor clearColor];
+    _rightTableView.delegate = self;
+    _rightTableView.dataSource = self;
+    _rightTableView.backgroundColor = [UIColor clearColor];
+    
+    [self.scrollView addSubview:self.leftTableView];
+    [self.scrollView addSubview:self.midTableView];
+    [self.scrollView addSubview:self.rightTableView];
+    [_scrollView setContentSize:CGSizeMake(3 * SCREEN_WIDTH, SCREEN_HEIGHT)];
+}
+
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+//确保索引可用
+-(NSInteger)indexForEnable:(NSInteger)index{
+    if (index < 0 || index == 0) {
+        return _currentIndex=0;
+    }else if (index > self.dataArray.count - 1 || index == self.dataArray.count - 1){
+        return _currentIndex = self.dataArray.count-1;
+    }else{
+        return _currentIndex==index;
+    }
+}
+- (void)changeTableViewAndLoadData{
+    //index = 0 情况，只需要刷新左边tableView和中间tableView
+    if (_currentIndex == 0) {
+        _leftArr = self.dataArray[_currentIndex];
+        _midArr = self.dataArray[_currentIndex +1];
+        
+        [_leftTableView reloadData];
+        [_midTableView reloadData];
+        _leftHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_leftArr];
+        _leftHeadView.cityName.text = [self currentCityWithDict:_leftArr];
+        _midHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_midArr];
+        _midHeadView.cityName.text = [self currentCityWithDict:_midArr];
+        
+        self.scrollView.contentOffset = CGPointMake(0, 0);
+        
+        //index 是为最后的下标时，刷新右边tableView 和 中间 tableView
+    }else if(_currentIndex == _dataArray.count - 1){
+        _rigthArr = self.dataArray[_currentIndex];
+        _midArr = self.dataArray[_currentIndex - 1];
+        [_rightTableView reloadData];
+        [_midTableView reloadData];
+        
+        _midHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_midArr];
+        _midHeadView.cityName.text = [self currentCityWithDict:_midArr];
+        _rightHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_rigthArr];
+        _rightHeadView.cityName.text = [self currentCityWithDict:_rigthArr];
+        
+        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth*2, 0);
+        //除了上边两种情况，三个tableView 都要刷新，为了左右移动时都能够显示数据
+    }else{
+        _rigthArr = self.dataArray[_currentIndex+1];
+        _midArr = self.dataArray[_currentIndex];
+        _leftArr = self.dataArray[_currentIndex - 1];
+        //刷新cell
+        [_rightTableView reloadData];
+        [_midTableView reloadData];
+        [_leftTableView reloadData];
+        //刷新头部视图
+        _leftHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_leftArr];
+        _leftHeadView.cityName.text = [self currentCityWithDict:_leftArr];
+        _midHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_midArr];
+        _midHeadView.cityName.text = [self currentCityWithDict:_midArr];
+        _rightHeadView.currentWeatherModel = [self currentWeatherModelWithDict:_rigthArr];
+        _rightHeadView.cityName.text = [self currentCityWithDict:_rigthArr];
+        
+        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth, 0);
+    }
+}
+- (NSString *)currentCityWithDict:(NSDictionary *)dict
+{
+    return  [[dict objectForKey:@"retData"] objectForKey:@"city"];
+}
+
+- (MHCurrentWeatherModel *)currentWeatherModelWithDict:(NSDictionary *)dict
+{
+    MHCurrentWeatherModel *currentWeatherModel = [[MHCurrentWeatherModel alloc] initWithDict:[[dict objectForKey:@"retData"] objectForKey:@"today"]];
+    return currentWeatherModel;
+}
+
+- (NSArray *)indexModelWithCurrentWeatherModel:(MHCurrentWeatherModel *)currentWeatherModel
+{
+            //获取指数模型数组
+        NSArray *indexArray;
+            NSMutableArray *mIndexArray = [NSMutableArray array];
+            for (NSDictionary *dict in currentWeatherModel.index) {
+                MHIndexModel *indexModel = [[MHIndexModel alloc] initWithDict:dict];
+                [mIndexArray addObject:indexModel];
+            }
+            indexArray = [mIndexArray copy];
+            //过滤指数
+            [mIndexArray removeAllObjects];
+            for (int i = 0; i < indexArray.count; i++) {
+                MHIndexModel *model = indexArray[i];
+                if (![model.code  isEqualToString:@"gm"] && ![model.code isEqualToString:@"ls"])
+                {
+                    [mIndexArray addObject:model];
+                }
+            }
+            indexArray = [mIndexArray copy];
+    return indexArray;
+}
+
+
+- (NSArray *)futureWeatherArrayWithDict:(NSDictionary *)dict
+{
+        //获取未来天气模型
+            NSArray *futuerWeatherData = [[dict objectForKey:@"retData"] objectForKey:@"forecast"];
+            NSArray *futureWeatherArray;
+            NSMutableArray *mFutuerWeatherArray = [NSMutableArray array];
+            for (NSDictionary *dictF in futuerWeatherData) {
+                MHFutuerWeatherModel *futureWeatherModel = [[MHFutuerWeatherModel alloc] initWithDict:dictF];
+                [mFutuerWeatherArray addObject:futureWeatherModel];
+            }
+            //获取未来天气模型数组
+           futureWeatherArray = [mFutuerWeatherArray copy];
+    return futureWeatherArray;
+}
+//- (void)changeTableViewAndLoadData{
+//    //index = 0 情况，只需要刷新左边tableView和中间tableView
+//    if (_currentIndex == 0) {
+//        _leftArr = self.tabArr[_currentIndex];
+//        _midArr = self.tabArr[_currentIndex +1];
+//        
+//        [_leftTable reloadData];
+//        [_midTable reloadData];
+//        
+//        self.scrollView.contentOffset = CGPointMake(0, 0);
+//        
+//        //index 是为最后的下标时，刷新右边tableView 和 中间 tableView
+//    }else if(_currentIndex == _tabArr.count - 1){
+//        _rigthArr = self.tabArr[_currentIndex];
+//        _midArr = self.tabArr[_currentIndex - 1];
+//        [_rightTable reloadData];
+//        [_midTable reloadData];
+//        
+//        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth*2, 0);
+//        //除了上边两种情况，三个tableView 都要刷新，为了左右移动时都能够显示数据
+//    }else{
+//        _rigthArr = self.tabArr[_currentIndex+1];
+//        _midArr = self.tabArr[_currentIndex];
+//        _leftArr = self.tabArr[_currentIndex - 1];
+//        
+//        [_rightTable reloadData];
+//        [_midTable reloadData];
+//        [_leftTable reloadData];
+//        
+//        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth, 0);
 //    }
-//    NSLog(@"%f", self.todayWeatherScroller.contentSize.width);
 //}
-//
-////设置未来天气数据
-//- (void)setFutureWeatherData
+#pragma mark - scrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView != self.scrollView) {
+        return;
+    }
+    //tableView继承scrollView，如果没有上面的判断下拉tableView的时候默认scrollView.contentOffset.x == 0也就是认为向右滑动
+    if (scrollView.contentOffset.x == 0) {//右滑（看上一张）
+        _currentIndex--;
+    }
+    if (scrollView.contentOffset.x == ScrollTableWidth * 2){//左滑（看下一张）
+        _currentIndex++;
+    }
+    //在最左边往左滑看下一张
+    if (_currentIndex == 0 && scrollView.contentOffset.x == ScrollTableWidth){
+        _currentIndex++;
+    }
+    //在最右边往右滑看上一张
+    if(_currentIndex == self.dataArray.count-1 && scrollView.contentOffset.x == ScrollTableWidth){
+        _currentIndex--;
+    }
+    if ([scrollView isEqual:self.scrollView]) {
+        if (_currentIndex<0) {
+            _currentIndex=0;
+        }
+        if (_currentIndex>self.dataArray.count-1) {
+            _currentIndex=self.dataArray.count-1;
+        }
+//        _scroll.index = _currentIndex;
+    }
+    [self indexForEnable:_currentIndex];
+    [self changeTableViewAndLoadData];
+
+}
+
+
+
+#pragma mark - tableView Delegate and Datasources
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
-//    
-//    int i = 0;
-//    NSArray *objs = [[NSBundle mainBundle] loadNibNamed:@"MHFutuerWeather" owner:nil options:nil];
-//    MHFutuerWeather *futureWeatherView = [objs lastObject];
-//    for (futureWeatherView in [self.futureWeatherView subviews]) {
-//        MHFutuerWeatherModel *model = self.futureWeatherArray[i];
-//        i++;
-//        //日期
-//        futureWeatherView.date.text = model.date;
-//        //星期
-//        futureWeatherView.week.text = model.week;
-//        //最高最低气温
-//        futureWeatherView.temp.text = [NSString stringWithFormat:@"%@ ~ %@",model.lowtemp,model.hightemp];
-//        //天气图标
-//        futureWeatherView.typeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",model.type]];
-//        //天气类型
-//        futureWeatherView.typeLabel.text = model.type;
+//    return SCREEN_HEIGHT;
+//}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    static NSString *ID = @"cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+//    if (!cell) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+//        cell.backgroundColor = [UIColor clearColor];
+//        cell.textLabel.textColor = [UIColor whiteColor];
 //    }
-//
-//}
-//
-//
-////获取数据
-//-(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  {
-//    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
-//    NSURL *url = [NSURL URLWithString: urlStr];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
-//    [request setHTTPMethod: @"GET"];
-//    [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
-//    [NSURLConnection sendAsynchronousRequest: request
-//                                       queue: [NSOperationQueue mainQueue]
-//                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
-//                               if (error) {
-//                                   NSLog(@"Httperror: %@%ld", error.localizedDescription, error.code);
-//                               } else {
-//                                   //反序列化jason数据
-//                                   NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-//                                   //获取当前城市
-//                                   self.currentCityName = [[dict objectForKey:@"retData"] objectForKey:@"city"];
-//                                   
-//                                   //获取当前天气模型
-//                                   self.currentWeatherModel = [[MHCurrentWeatherModel alloc] initWithDict:[[dict objectForKey:@"retData"] objectForKey:@"today"]];
-//                                   
-//                                   //获取指数模型数组
-//                                   NSMutableArray *mIndexArray = [NSMutableArray array];
-//                                   for (NSDictionary *dict in self.currentWeatherModel.index) {
-//                                       MHIndexModel *indexModel = [[MHIndexModel alloc] initWithDict:dict];
-//                                       [mIndexArray addObject:indexModel];
-//                                   }
-//                                   self.indexArray = [mIndexArray copy];
-//                                   //过滤指数
-//                                   [mIndexArray removeAllObjects];
-//                                   for (int i = 0; i < self.indexArray.count; i++) {
-//                                       MHIndexModel *model = self.indexArray[i];
-//                                     if (![model.code  isEqualToString:@"gm"] && ![model.code isEqualToString:@"ls"])
-//                                     {
-//                                         [mIndexArray addObject:model];
-//                                     }
-//                                   }
-//                                   
-//                                   self.indexArray = [mIndexArray copy];
-//                                   //获取未来天气模型
-//                                  self.futuerWeatherData = [[dict objectForKey:@"retData"] objectForKey:@"forecast"];
-//                                   
-//                                   NSMutableArray *mFutuerWeatherArray = [NSMutableArray array];
-//                                   for (NSDictionary *dictF in self.futuerWeatherData) {
-//                                       MHFutuerWeatherModel *futureWeatherModel = [[MHFutuerWeatherModel alloc] initWithDict:dictF];
-//                                       [mFutuerWeatherArray addObject:futureWeatherModel];
-//                                   }
-//                                   //获取未来天气模型数组
-//                                   self.futureWeatherArray = [mFutuerWeatherArray copy];
-//                                   
-//                                   //回到主线程
-//                                   dispatch_async(dispatch_get_main_queue(), ^{
-//                                       [self loadViewWithcurrentWeatherModel];
-//                                   });
-//
-//                               }
-//                           }];
-//}
+    
+        MHFutuerWeather *cell = [MHFutuerWeather futureWeatherCellWithTableView:tableView];
+    
+    if (tableView == _leftTableView) {
+        MHFutuerWeatherModel *model = [self futureWeatherArrayWithDict:_leftArr][indexPath.row];
+        cell.futureWeather = model;
 
+    }
+    if (tableView == _midTableView) {
+        MHFutuerWeatherModel *model = [self futureWeatherArrayWithDict:_midArr][indexPath.row];
+        cell.futureWeather = model;
 
+    }
+    if (tableView == _rightTableView) {
+        MHFutuerWeatherModel *model = [self futureWeatherArrayWithDict:_rigthArr][indexPath.row];
+        cell.futureWeather = model;
+    }
+    return cell;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (tableView == _leftTableView) {
+        return [self futureWeatherArrayWithDict:_leftArr].count;
+    }
+    if (tableView == _midTableView) {
+        return [self futureWeatherArrayWithDict:_midArr].count;
+           }
+    if (tableView == _rightTableView) {
+       return [self futureWeatherArrayWithDict:_rigthArr].count;
+    }
+    return 0;
+}
 @end

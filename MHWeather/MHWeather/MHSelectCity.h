@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MHCityModel.h"
 
+typedef void (^ReturnModelBlock)(MHCityModel *model);
+typedef void (^ReturnDictBlock)(NSDictionary *dict);
 @interface MHSelectCity : UIViewController
 
-+ (MHCityModel *)cityModelWithCityName:(NSString *)city;
 
-+ (MHCityModel *)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city;
++ (void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city Return:(ReturnModelBlock)returnModelBlock;
++(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  Return:(ReturnDictBlock)returnDictBlock;
+//+ (void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city getUrl;
++ (void)upDateCityModelWithCityName:(NSString *)city;
++ (void)updateCity:(NSString *)city request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg;
 @end

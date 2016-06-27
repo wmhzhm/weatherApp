@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="AhC-Et-AZA" customClass="MHFutuerWeather">
+        <view contentMode="scaleToFill" restorationIdentifier="cell" id="AhC-Et-AZA" customClass="MHFutuerWeather">
             <rect key="frame" x="0.0" y="0.0" width="532" height="84"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>

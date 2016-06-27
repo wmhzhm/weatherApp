@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B5067641D213C5500A21EE9 /* MHWeatherTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5067631D213C5500A21EE9 /* MHWeatherTableView.m */; };
+		8B5067671D21554600A21EE9 /* MHHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5067661D21554600A21EE9 /* MHHeaderView.m */; };
+		8B5067691D2156A500A21EE9 /* MHHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5067681D2156A500A21EE9 /* MHHeaderView.xib */; };
 		8B5C83851D1F814400D676A4 /* MHWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83831D1F814400D676A4 /* MHWeatherView.m */; };
+		8B5C83891D1FCD9A00D676A4 /* MHSQLiteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */; };
+		8B5C838B1D1FD69100D676A4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */; };
 		8BA201011D110187003FCA9F /* MHIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA201001D110187003FCA9F /* MHIndexView.m */; };
 		8BA201031D11019E003FCA9F /* MHIndexView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA201021D11019E003FCA9F /* MHIndexView.xib */; };
 		8BB8EC1A1D0B00E5000BDD3C /* MHSelectCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */; };
@@ -46,8 +51,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B5067621D213C5500A21EE9 /* MHWeatherTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWeatherTableView.h; sourceTree = "<group>"; };
+		8B5067631D213C5500A21EE9 /* MHWeatherTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWeatherTableView.m; sourceTree = "<group>"; };
+		8B5067651D21554600A21EE9 /* MHHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHHeaderView.h; sourceTree = "<group>"; };
+		8B5067661D21554600A21EE9 /* MHHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHHeaderView.m; sourceTree = "<group>"; };
+		8B5067681D2156A500A21EE9 /* MHHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHHeaderView.xib; sourceTree = "<group>"; };
 		8B5C83821D1F814400D676A4 /* MHWeatherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWeatherView.h; sourceTree = "<group>"; };
 		8B5C83831D1F814400D676A4 /* MHWeatherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWeatherView.m; sourceTree = "<group>"; };
+		8B5C83871D1FCD9A00D676A4 /* MHSQLiteTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSQLiteTool.h; sourceTree = "<group>"; };
+		8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSQLiteTool.m; sourceTree = "<group>"; };
+		8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		8BA200FF1D110187003FCA9F /* MHIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHIndexView.h; sourceTree = "<group>"; };
 		8BA201001D110187003FCA9F /* MHIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHIndexView.m; sourceTree = "<group>"; };
 		8BA201021D11019E003FCA9F /* MHIndexView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHIndexView.xib; sourceTree = "<group>"; };
@@ -89,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B5C838B1D1FD69100D676A4 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +126,8 @@
 		8B4B86CB1D0E579E00697482 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8B5C83871D1FCD9A00D676A4 /* MHSQLiteTool.h */,
+				8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -134,6 +150,11 @@
 		8BB8EC161D0B0081000BDD3C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8B5067651D21554600A21EE9 /* MHHeaderView.h */,
+				8B5067661D21554600A21EE9 /* MHHeaderView.m */,
+				8B5067681D2156A500A21EE9 /* MHHeaderView.xib */,
+				8B5067621D213C5500A21EE9 /* MHWeatherTableView.h */,
+				8B5067631D213C5500A21EE9 /* MHWeatherTableView.m */,
 				8BB8EC1B1D0B0752000BDD3C /* MHSelectCityView.h */,
 				8BB8EC1C1D0B0752000BDD3C /* MHSelectCityView.m */,
 				8BB8EC291D0C70E0000BDD3C /* MHFutuerWeather.h */,
@@ -142,8 +163,6 @@
 				8BA200FF1D110187003FCA9F /* MHIndexView.h */,
 				8BA201001D110187003FCA9F /* MHIndexView.m */,
 				8BA201021D11019E003FCA9F /* MHIndexView.xib */,
-				8B5C83821D1F814400D676A4 /* MHWeatherView.h */,
-				8B5C83831D1F814400D676A4 /* MHWeatherView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -155,6 +174,8 @@
 				8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */,
 				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
 				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
+				8B5C83821D1F814400D676A4 /* MHWeatherView.h */,
+				8B5C83831D1F814400D676A4 /* MHWeatherView.m */,
 				8BE3E3001D0AE93600067446 /* Main.storyboard */,
 			);
 			name = Controller;
@@ -163,6 +184,7 @@
 		8BE3E2EB1D0AE93500067446 = {
 			isa = PBXGroup;
 			children = (
+				8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */,
 				8BE3E2F61D0AE93600067446 /* MHWeather */,
 				8BE3E3101D0AE93600067446 /* MHWeatherTests */,
 				8BE3E31B1D0AE93600067446 /* MHWeatherUITests */,
@@ -331,6 +353,7 @@
 				8BE3E3071D0AE93600067446 /* LaunchScreen.storyboard in Resources */,
 				8BE3E3041D0AE93600067446 /* Assets.xcassets in Resources */,
 				8BA201031D11019E003FCA9F /* MHIndexView.xib in Resources */,
+				8B5067691D2156A500A21EE9 /* MHHeaderView.xib in Resources */,
 				8BE3E3021D0AE93600067446 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,7 +382,10 @@
 				8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */,
 				8BB8EC231D0C0A87000BDD3C /* MHCurrentWeatherModel.m in Sources */,
 				8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */,
+				8B5067641D213C5500A21EE9 /* MHWeatherTableView.m in Sources */,
 				8BE3E2FC1D0AE93600067446 /* AppDelegate.m in Sources */,
+				8B5067671D21554600A21EE9 /* MHHeaderView.m in Sources */,
+				8B5C83891D1FCD9A00D676A4 /* MHSQLiteTool.m in Sources */,
 				8BA201011D110187003FCA9F /* MHIndexView.m in Sources */,
 				8BB8EC201D0BE753000BDD3C /* MHCityModel.m in Sources */,
 				8BE3E2F91D0AE93600067446 /* main.m in Sources */,

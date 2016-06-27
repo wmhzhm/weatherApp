@@ -8,6 +8,7 @@
 
 #import "MHSelectCity.h"
 #import "MHCityModel.h"
+#import "MHSQLiteTool.h"
 
 @interface MHSelectCity()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 
@@ -16,9 +17,11 @@
 - (IBAction)clickAddBtn;
 @property (strong ,nonatomic) NSArray *list;//原始数据
 @property (strong ,nonatomic) NSArray *province;//省份数组
-
+@property (strong ,nonatomic) MHCityModel *cityModel;
+//@property (copy ,nonatomic)  ReturnModelBlock returnModelBlock;
 @end
 NSInteger row = -1;
+//__block MHCityModel *modelBack;
 @implementation MHSelectCity
 
 - (void)viewDidLoad
@@ -26,24 +29,15 @@ NSInteger row = -1;
     [super viewDidLoad];
     
 }
-+ (MHCityModel *)cityModelWithCityName:(NSString *)city
-{
-    NSString *httpUrl = @"http://apis.baidu.com/apistore/weatherservice/citylist";
-    
-    NSString *httpArg = [NSString stringWithFormat:@"cityname=%@",[city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-    return [self request: httpUrl withHttpArg: httpArg AtCity:city];
-}
 
-+ (MHCityModel *)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city{
++ (void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg AtCity:(NSString *)city Return:(ReturnModelBlock)returnModelBlock{
     
     NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
     NSURL *url = [NSURL URLWithString: urlStr];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 50];
     [request setHTTPMethod: @"GET"];
     [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
 
-    
-        __block MHCityModel *modelBack;
     //进行异步请求
     [NSURLConnection sendAsynchronousRequest: request
                                        queue: [NSOperationQueue mainQueue]
@@ -56,14 +50,61 @@ NSInteger row = -1;
                                    NSArray *list = [dict objectForKey:@"retData"];
                                    for (NSDictionary *dictionary in list) {
                                        MHCityModel *model = [[MHCityModel alloc] initWithDict:dictionary];
-                                       if (model.name_cn == city) {
-                                           modelBack = model;
+                                       if ([model.name_cn isEqualToString:city]) {
+                                           returnModelBlock(model);
+                                           break;
                                        }
                                    }
                                }
                            }];
-    return modelBack;
 }
+
+- (void)sendNotificationWithDict:(NSDictionary *)dictionary
+{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:dictionary];
+}
+
++ (void)upDateCityModelWithCityName:(NSString *)city
+{
+    NSString *httpUrl = @"http://apis.baidu.com/apistore/weatherservice/citylist";
+    
+    NSString *httpArg = [NSString stringWithFormat:@"cityname=%@",[city stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    [self updateCity:city request:httpUrl withHttpArg:httpArg];
+}
++ (void)updateCity:(NSString *)city request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg{
+    
+    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
+    NSURL *url = [NSURL URLWithString: urlStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 50];
+    [request setHTTPMethod: @"GET"];
+    [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
+    
+    
+    __block MHCityModel *modelBack;
+    //进行异步请求
+    [NSURLConnection sendAsynchronousRequest: request
+                                       queue: [NSOperationQueue mainQueue]
+                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
+                               if (error) {
+                                   NSLog(@"Httperror: %@%ld", error.localizedDescription, error.code);
+                               } else {
+                                   
+                                   NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];//反序列化jason数据
+                                   NSArray *list = [dict objectForKey:@"retData"];
+                                   for (NSDictionary *dictionary in list) {
+                                       MHCityModel *model = [[MHCityModel alloc] initWithDict:dictionary];
+                                       if ([model.name_cn isEqualToString:city]) {
+                                           
+                                           modelBack = model;
+                                        [MHSQLiteTool addCityWithCityModel:modelBack];
+                                       }
+                                   }
+                               }
+                           }];
+    
+}
+
 
 - (void)sendCity:(NSString *)city
 {
@@ -78,7 +119,7 @@ NSInteger row = -1;
 -(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  {
     NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
     NSURL *url = [NSURL URLWithString: urlStr];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 10];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 50];
     [request setHTTPMethod: @"GET"];
     [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
     NSLog(@"Request : %@",request);
@@ -131,6 +172,27 @@ NSInteger row = -1;
     }
     }];
 }
+
++(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  Return:(ReturnDictBlock)returnDictBlock{
+    NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
+    NSURL *url = [NSURL URLWithString: urlStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 50];
+    [request setHTTPMethod: @"GET"];
+    [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
+    [NSURLConnection sendAsynchronousRequest: request
+                                       queue: [NSOperationQueue mainQueue]
+                           completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){
+                               if (error) {
+                                   NSLog(@"Httperror: %@%ld", error.localizedDescription, error.code);
+                               } else {
+                                   //反序列化jason数据
+                                   NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+                                   returnDictBlock(dict);
+                               }
+                           }];
+}
+
+
 
 
 #pragma mark - UITextFieldDelegate
