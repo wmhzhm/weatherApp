@@ -167,11 +167,10 @@ NSInteger row = -1;
         return;
     }else{
         NSDictionary *dict = self.list[row];
-        
             MHCityModel *cityModel = [[MHCityModel alloc] initWithDict:dict];
 //            [self getDataWithCity:self.cityModel];
         [MHSQLiteTool addCityWithCityModel:cityModel];
-        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewCity" object:nil userInfo:nil];
            }
     }];
 }
@@ -182,6 +181,7 @@ NSInteger row = -1;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL: url cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 50];
     [request setHTTPMethod: @"GET"];
     [request addValue: @"62167ba3aea12d9b14b5e4d56c1402bc" forHTTPHeaderField: @"apikey"];
+    
     [NSURLConnection sendAsynchronousRequest: request
                                        queue: [NSOperationQueue mainQueue]
                            completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error){

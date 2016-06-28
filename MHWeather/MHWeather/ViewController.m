@@ -85,7 +85,26 @@
     [self getCityArray];
     //设置查询城市观察者
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerCompletion) name:@"RegistreCompletionNotification" object:nil];
+    //设置索引观察者
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jumpToIndex:) name:@"cityIndex" object:nil];
 }
+
+- (void)jumpToIndex:(NSNotification *)notification
+{
+    NSDictionary *dict = notification.userInfo;
+    MHCityModel *city = [[MHCityModel alloc] initWithDict:dict];
+    
+    
+    for (int i = 0; i < _cityArray.count; i++) {
+        MHCityModel *toCity = _cityArray[i];
+        if ([city.name_cn isEqualToString:toCity.name_cn]) {
+            //跳转到此索引(i)
+            _currentIndex = i;
+            [self changeTableViewAndLoadData];
+        }
+    }
+}
+
 
 - (void)registerCompletion
 {
@@ -123,43 +142,23 @@
     NSString *httpArg = [NSString stringWithFormat:@"cityname=%@&cityid=%ld",[model.name_cn stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]],model.area_id];
     
     [MHSelectCity request:httpUrl withHttpArg:httpArg Return:^(NSDictionary *dict){
-        //获取当前城市
-//        self.currentCityName = [[dict objectForKey:@"retData"] objectForKey:@"city"];
-        
-//        //获取当前天气模型
-//        self.currentWeatherModel = [[MHCurrentWeatherModel alloc] initWithDict:[[dict objectForKey:@"retData"] objectForKey:@"today"]];
-//        
-//        //获取指数模型数组
-//        NSMutableArray *mIndexArray = [NSMutableArray array];
-//        for (NSDictionary *dict in self.currentWeatherModel.index) {
-//            MHIndexModel *indexModel = [[MHIndexModel alloc] initWithDict:dict];
-//            [mIndexArray addObject:indexModel];
-//        }
-//        self.indexArray = [mIndexArray copy];
-//        //过滤指数
-//        [mIndexArray removeAllObjects];
-//        for (int i = 0; i < self.indexArray.count; i++) {
-//            MHIndexModel *model = self.indexArray[i];
-//            if (![model.code  isEqualToString:@"gm"] && ![model.code isEqualToString:@"ls"])
-//            {
-//                [mIndexArray addObject:model];
-//            }
-//        }
-//        
-//        self.indexArray = [mIndexArray copy];
-//        //获取未来天气模型
-//        self.futuerWeatherData = [[dict objectForKey:@"retData"] objectForKey:@"forecast"];
-//        
-//        NSMutableArray *mFutuerWeatherArray = [NSMutableArray array];
-//        for (NSDictionary *dictF in self.futuerWeatherData) {
-//            MHFutuerWeatherModel *futureWeatherModel = [[MHFutuerWeatherModel alloc] initWithDict:dictF];
-//            [mFutuerWeatherArray addObject:futureWeatherModel];
-//        }
-//        //获取未来天气模型数组
-//        self.futureWeatherArray = [mFutuerWeatherArray copy];
+
         [_mDataArray addObject:dict];
         _dataArray = _mDataArray;
         if ([_dataArray count] == [_cityArray count]) {
+            //将_dataArray数组的顺序调整
+            NSMutableArray *array = [NSMutableArray array];
+            for (int index = 0; index < _cityArray.count; index++) {
+                MHCityModel *model = _cityArray[index];
+            for (int i = 0; i < [_dataArray count]; i++) {
+                    NSString *cityName = [[_dataArray[i] objectForKey:@"retData"] objectForKey:@"city"];
+                if ([cityName isEqualToString:model.name_cn]) {
+                    [array addObject:_dataArray[i]];
+                    }
+                }
+            }
+            //排序完成重新赋值
+            _dataArray = array;
             [self changeTableViewAndLoadData];
         }
     }];

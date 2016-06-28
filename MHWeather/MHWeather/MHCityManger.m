@@ -10,6 +10,7 @@
 #import "MHSQLiteTool.h"
 #import "MHCityModel.h"
 #import "MHSelectCity.h"
+#import "MJExtension.h"
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
@@ -26,7 +27,16 @@
     self.view.backgroundColor = [UIColor brownColor];
     [self cityArrayWithSQl];
     [self addTableView];
+    //设置查询城市观察者
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:@"addNewCity" object:nil];
+
 }
+-(void)reloadTableView
+{
+    [self cityArrayWithSQl];
+    [self.tableView reloadData];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -100,6 +110,19 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == _cityArray.count) {
+        return;
+    }else
+    {
+        MHCityModel *city = _cityArray[indexPath.row];
+        NSDictionary *dict =    [city mj_keyValues];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cityIndex" object:nil userInfo:dict];
+        //移除模态视图
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
 - (UIView *)addOneView
 {
     CGRect frame = CGRectMake(0, 0, SCREEN_WIDTH, 1);
