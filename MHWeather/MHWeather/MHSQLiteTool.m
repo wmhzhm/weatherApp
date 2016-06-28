@@ -60,14 +60,14 @@ static sqlite3 *_db;
 }
 
 //根据城市模型添加城市数据
-+ (void)addCityWithCityModel:(MHCityModel *)model
++ (void)addCityWithCityModel:(MHCityModel *)model 
 {
      //cityID城市编码  cityName:城市名  cityPingYing：城市拼音  cityDistrict:城市市区名  cityProvince：城市所在省名
     NSString *sql = [NSString stringWithFormat:@"insert into t_city (cityID,cityName,cityPingYing,cityDistrict,cityProvince) values('%ld','%@','%@','%@','%@');",(long)model.area_id,model.name_cn,model.name_en,model.district_cn,model.province_cn];
         char *errorMes = NULL;
         sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
     NSLog(@"添加成功:%@",model.name_cn);
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
 }
 
 + (NSArray *)searchCityArray

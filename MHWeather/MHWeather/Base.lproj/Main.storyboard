@@ -25,6 +25,24 @@
             </objects>
             <point key="canvasLocation" x="382" y="653"/>
         </scene>
+        <!--City Manger-->
+        <scene sceneID="xFe-ms-bNC">
+            <objects>
+                <viewController storyboardIdentifier="CityManger" id="0o5-Wq-sD0" customClass="MHCityManger" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="b7y-h7-yVR"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mkz-nu-4fK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dN7-dl-EGf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OgY-B8-DDN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1349" y="648"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -201,7 +219,7 @@
         <!--Select City-->
         <scene sceneID="qLb-y3-dgZ">
             <objects>
-                <viewController storyboardIdentifier="RightWin" id="8Nk-4g-zO0" customClass="MHSelectCity" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectCity" id="8Nk-4g-zO0" customClass="MHSelectCity" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4t3-uM-Mej"/>
                         <viewControllerLayoutGuide type="bottom" id="6Ll-wa-vAS"/>

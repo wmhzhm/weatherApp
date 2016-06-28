@@ -10,6 +10,7 @@
 		8B5067641D213C5500A21EE9 /* MHWeatherTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5067631D213C5500A21EE9 /* MHWeatherTableView.m */; };
 		8B5067671D21554600A21EE9 /* MHHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5067661D21554600A21EE9 /* MHHeaderView.m */; };
 		8B5067691D2156A500A21EE9 /* MHHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5067681D2156A500A21EE9 /* MHHeaderView.xib */; };
+		8B50676C1D221F5600A21EE9 /* MHCityManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B50676B1D221F5600A21EE9 /* MHCityManger.m */; };
 		8B5C83851D1F814400D676A4 /* MHWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83831D1F814400D676A4 /* MHWeatherView.m */; };
 		8B5C83891D1FCD9A00D676A4 /* MHSQLiteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */; };
 		8B5C838B1D1FD69100D676A4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */; };
@@ -56,6 +57,8 @@
 		8B5067651D21554600A21EE9 /* MHHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHHeaderView.h; sourceTree = "<group>"; };
 		8B5067661D21554600A21EE9 /* MHHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHHeaderView.m; sourceTree = "<group>"; };
 		8B5067681D2156A500A21EE9 /* MHHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHHeaderView.xib; sourceTree = "<group>"; };
+		8B50676A1D221F5600A21EE9 /* MHCityManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHCityManger.h; sourceTree = "<group>"; };
+		8B50676B1D221F5600A21EE9 /* MHCityManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHCityManger.m; sourceTree = "<group>"; };
 		8B5C83821D1F814400D676A4 /* MHWeatherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWeatherView.h; sourceTree = "<group>"; };
 		8B5C83831D1F814400D676A4 /* MHWeatherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWeatherView.m; sourceTree = "<group>"; };
 		8B5C83871D1FCD9A00D676A4 /* MHSQLiteTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSQLiteTool.h; sourceTree = "<group>"; };
@@ -177,6 +180,8 @@
 				8B5C83821D1F814400D676A4 /* MHWeatherView.h */,
 				8B5C83831D1F814400D676A4 /* MHWeatherView.m */,
 				8BE3E3001D0AE93600067446 /* Main.storyboard */,
+				8B50676A1D221F5600A21EE9 /* MHCityManger.h */,
+				8B50676B1D221F5600A21EE9 /* MHCityManger.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BB8EC1D1D0B0752000BDD3C /* MHSelectCityView.m in Sources */,
+				8B50676C1D221F5600A21EE9 /* MHCityManger.m in Sources */,
 				8BB8EC231D0C0A87000BDD3C /* MHCurrentWeatherModel.m in Sources */,
 				8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */,
 				8B5067641D213C5500A21EE9 /* MHWeatherTableView.m in Sources */,

@@ -17,6 +17,7 @@
 #import "MHSQLiteTool.h"
 #import "MHSelectCity.h"
 #import "MHHeaderView.h"
+#import "MHCityManger.h"
 
 #define ScrollTableWidth [UIScreen mainScreen].bounds.size.width
 #define ScrollTableHeight [UIScreen mainScreen].bounds.size.height
@@ -72,7 +73,7 @@
     
     [self loadWeatherView];
     
-   
+    
     //测试用btn
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30, 0, 30, 30)];
     [btn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
@@ -82,15 +83,22 @@
     _currentIndex = 0;
     _mDataArray = [NSMutableArray array];
     [self getCityArray];
-    
+    //设置查询城市观察者
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerCompletion) name:@"RegistreCompletionNotification" object:nil];
 }
+
+- (void)registerCompletion
+{
+    [self getCityArray];
+}
+
 
 -(void)click
 {
     //弹出模态视图选择城市
-    MHSelectCity * selectCity = [[MHSelectCity alloc]init];
-    selectCity.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    MHSelectCity *view = [self.storyboard instantiateViewControllerWithIdentifier:@"RightWin"];
+//    MHSelectCity * selectCity = [[MHSelectCity alloc]init];
+//    selectCity.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    MHCityManger *view = [self.storyboard instantiateViewControllerWithIdentifier:@"CityManger"];
 //    [self presentViewController:selectCity animated:YES completion:nil];
     [self presentViewController:view animated:YES completion:nil];
 }
@@ -101,6 +109,7 @@
     self.cityArray = [[NSArray alloc] init];
     self.cityArray = [MHSQLiteTool searchCityArray];
     //得到所有城市的数据
+    [self.mDataArray removeAllObjects];
     for (int i = 0 ; i < _cityArray.count; i ++) {
         MHCityModel *city = _cityArray[i];
         [self getDataWithCity:city];

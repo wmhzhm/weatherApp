@@ -168,8 +168,11 @@ NSInteger row = -1;
     }else{
         NSDictionary *dict = self.list[row];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:dict];
-    }
+            MHCityModel *cityModel = [[MHCityModel alloc] initWithDict:dict];
+//            [self getDataWithCity:self.cityModel];
+        [MHSQLiteTool addCityWithCityModel:cityModel];
+        
+           }
     }];
 }
 
