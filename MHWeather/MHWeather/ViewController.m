@@ -34,7 +34,7 @@
 @property (strong ,nonatomic) MHHeaderView *leftHeadView;
 @property (strong ,nonatomic) MHHeaderView *midHeadView;
 @property (strong ,nonatomic) MHHeaderView *rightHeadView;
-
+@property (strong ,nonatomic) UIImageView *backgroundView;
 
 @property (strong ,nonatomic) UITableView *leftTableView;
 @property (strong ,nonatomic) UITableView *midTableView;
@@ -52,6 +52,7 @@
     UIImageView *background = [[UIImageView alloc] init];
     background.frame = [UIScreen mainScreen].bounds;
     background.image = [UIImage imageNamed:@"background1"];
+    self.backgroundView = background;
     [self.view addSubview:background];
     //获取目前需要查询的城市信息
     self.cityArray = [MHSQLiteTool searchCityArray];
@@ -71,6 +72,7 @@
     self.pageControl.backgroundColor = [UIColor clearColor];
     //设置pageControl的数目
     _pageControl.numberOfPages = _cityArray.count;
+//    _pageControl.numberOfPages = 9;
     _pageControl.enabled = NO;
     [self.view addSubview:_pageControl];
     UIView *fengexian = [[UIView alloc] init];
@@ -136,6 +138,7 @@
     [_cityArray removeAllObjects];
     self.cityArray = [MHSQLiteTool searchCityArray];
     //得到所有城市的数据
+    _pageControl.numberOfPages = _cityArray.count;
     [self.mDataArray removeAllObjects];
     for (int i = 0 ; i < _cityArray.count; i ++) {
         MHCityModel *city = _cityArray[i];
@@ -180,6 +183,10 @@
     self.leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
     self.midTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
     self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
+    
+    _leftTableView.showsVerticalScrollIndicator = NO;
+    _midTableView.showsVerticalScrollIndicator = NO;
+    _rightTableView.showsVerticalScrollIndicator = NO;
     
     //创建TableHeaderView
     _leftHeadView = [MHHeaderView headView];
@@ -246,7 +253,8 @@
         _midHeadView.cityName.text = [self currentCityWithDict:_midArr];
         
         self.scrollView.contentOffset = CGPointMake(0, 0);
-        
+        MHCurrentWeatherModel *model = [self currentWeatherModelWithDict:_leftArr];
+        self.backgroundView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@bcg",model.type]];
         //index 是为最后的下标时，刷新右边tableView 和 中间 tableView
     }else if(_currentIndex == _dataArray.count - 1){
         _rigthArr = self.dataArray[_currentIndex];
@@ -260,6 +268,8 @@
         _rightHeadView.cityName.text = [self currentCityWithDict:_rigthArr];
         
         self.scrollView.contentOffset = CGPointMake(ScrollTableWidth*2, 0);
+        MHCurrentWeatherModel *model = [self currentWeatherModelWithDict:_rigthArr];
+        self.backgroundView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@bcg",model.type]];
         //除了上边两种情况，三个tableView 都要刷新，为了左右移动时都能够显示数据
     }else{
         _rigthArr = self.dataArray[_currentIndex+1];
@@ -278,6 +288,8 @@
         _rightHeadView.cityName.text = [self currentCityWithDict:_rigthArr];
         
         self.scrollView.contentOffset = CGPointMake(ScrollTableWidth, 0);
+        MHCurrentWeatherModel *model = [self currentWeatherModelWithDict:_midArr];
+        self.backgroundView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@bcg",model.type]];
     }
     _pageControl.currentPage = _currentIndex;
 }

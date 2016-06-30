@@ -41,7 +41,7 @@
     [self.tableView reloadData];
     //刷新主界面的数据数组
 //    RegistreCompletionNotification
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -116,11 +116,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID2];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor blackColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:30];
-        cell.textLabel.text = cityModel.name_cn;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.font = [UIFont systemFontOfSize:30];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell addSubview:[self addOneView]];
         }
+        cell.textLabel.text = cityModel.name_cn;
+        
+        
         return cell;
         }
 }
@@ -141,7 +143,11 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_cityArray.count < 4) {
+        return NO;
+    }else{
     return YES;
+    }
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {

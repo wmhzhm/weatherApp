@@ -159,21 +159,21 @@ NSInteger row = -1;
     return UIStatusBarStyleLightContent;
 }
 
-//添加城市按钮
-- (IBAction)clickAddBtn {
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-    if (row == -1) {
-        return;
-    }else{
-        NSDictionary *dict = self.list[row];
-            MHCityModel *cityModel = [[MHCityModel alloc] initWithDict:dict];
-//            [self getDataWithCity:self.cityModel];
-        [MHSQLiteTool addCityWithCityModel:cityModel];
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewCity" object:nil userInfo:nil];
-           }
-    }];
-}
+////添加城市按钮
+//- (IBAction)clickAddBtn {
+//    
+//    [self dismissViewControllerAnimated:YES completion:^{
+//    if (row == -1) {
+//        return;
+//    }else{
+//        NSDictionary *dict = self.list[row];
+//            MHCityModel *cityModel = [[MHCityModel alloc] initWithDict:dict];
+////            [self getDataWithCity:self.cityModel];
+//        [MHSQLiteTool addCityWithCityModel:cityModel];
+//         [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewCity" object:nil userInfo:nil];
+//           }
+//    }];
+//}
 
 +(void)request: (NSString*)httpUrl withHttpArg: (NSString*)HttpArg  Return:(ReturnDictBlock)returnDictBlock{
     NSString *urlStr = [[NSString alloc]initWithFormat: @"%@?%@", httpUrl, HttpArg];
@@ -208,13 +208,13 @@ NSInteger row = -1;
     return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *city = self.searchCityTextField.text;
-    NSLog(@"当前字段：%@",city);
-    [self sendCity:city];
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    NSString *city = self.searchCityTextField.text;
+//    NSLog(@"当前字段：%@",city);
+//    [self sendCity:city];
+//    return YES;
+//}
 
 #pragma mark - UITableViewDataSources
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -231,11 +231,11 @@ NSInteger row = -1;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:188/255  green:32/255 blue:3/255 alpha:0.11];
 
-    }
+}
 //    cell.textLabel.text = [NSString stringWithFormat:@"%@,%@,%@",model.province_cn,model.district_cn,model.name_cn];
      cell.textLabel.text = [NSString stringWithFormat:@"%@,(%@,%@)",model.name_cn,model.province_cn,model.district_cn];
     return  cell;
@@ -243,7 +243,13 @@ NSInteger row = -1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    row = indexPath.row;
+    [self dismissViewControllerAnimated:YES completion:^{
+            NSDictionary *dict = self.list[indexPath.row];
+            MHCityModel *cityModel = [[MHCityModel alloc] initWithDict:dict];
+            //            [self getDataWithCity:self.cityModel];
+            [MHSQLiteTool addCityWithCityModel:cityModel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"addNewCity" object:nil userInfo:nil];
+    }];
 }
 
 @end

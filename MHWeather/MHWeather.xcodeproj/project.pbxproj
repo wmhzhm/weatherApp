@@ -24,12 +24,12 @@
 		8BB8EC281D0C70C8000BDD3C /* MHFutuerWeather.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB8EC271D0C70C8000BDD3C /* MHFutuerWeather.xib */; };
 		8BB8EC2B1D0C70E0000BDD3C /* MHFutuerWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC2A1D0C70E0000BDD3C /* MHFutuerWeather.m */; };
 		8BB8EC2E1D0C735C000BDD3C /* MHFutuerWeatherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8EC2D1D0C735C000BDD3C /* MHFutuerWeatherModel.m */; };
+		8BE0BA0C1D254EE3008718CC /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE0BA0B1D254EE3008718CC /* Launch Screen.storyboard */; };
 		8BE3E2F91D0AE93600067446 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2F81D0AE93600067446 /* main.m */; };
 		8BE3E2FC1D0AE93600067446 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2FB1D0AE93600067446 /* AppDelegate.m */; };
 		8BE3E2FF1D0AE93600067446 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E2FE1D0AE93600067446 /* ViewController.m */; };
 		8BE3E3021D0AE93600067446 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3E3001D0AE93600067446 /* Main.storyboard */; };
 		8BE3E3041D0AE93600067446 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3E3031D0AE93600067446 /* Assets.xcassets */; };
-		8BE3E3071D0AE93600067446 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3E3051D0AE93600067446 /* LaunchScreen.storyboard */; };
 		8BE3E3121D0AE93600067446 /* MHWeatherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E3111D0AE93600067446 /* MHWeatherTests.m */; };
 		8BE3E31D1D0AE93600067446 /* MHWeatherUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3E31C1D0AE93600067446 /* MHWeatherUITests.m */; };
 		E4A3640D7ED5463952C162FA /* libPods-MHWeather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A680271A334A4DDF1D4723E /* libPods-MHWeather.a */; };
@@ -85,6 +85,7 @@
 		8BB8EC2A1D0C70E0000BDD3C /* MHFutuerWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFutuerWeather.m; sourceTree = "<group>"; };
 		8BB8EC2C1D0C735C000BDD3C /* MHFutuerWeatherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHFutuerWeatherModel.h; sourceTree = "<group>"; };
 		8BB8EC2D1D0C735C000BDD3C /* MHFutuerWeatherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFutuerWeatherModel.m; sourceTree = "<group>"; };
+		8BE0BA0B1D254EE3008718CC /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		8BE3E2F41D0AE93600067446 /* MHWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MHWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE3E2F81D0AE93600067446 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BE3E2FA1D0AE93600067446 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 		8BE3E2FE1D0AE93600067446 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8BE3E3011D0AE93600067446 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BE3E3031D0AE93600067446 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8BE3E3061D0AE93600067446 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BE3E3081D0AE93600067446 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BE3E30D1D0AE93600067446 /* MHWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MHWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE3E3111D0AE93600067446 /* MHWeatherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHWeatherTests.m; sourceTree = "<group>"; };
@@ -178,15 +178,15 @@
 		8BB8EC171D0B008A000BDD3C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8BB8EC181D0B00E5000BDD3C /* MHSelectCity.h */,
-				8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */,
-				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
-				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
 				8B5C83821D1F814400D676A4 /* MHWeatherView.h */,
 				8B5C83831D1F814400D676A4 /* MHWeatherView.m */,
 				8BE3E3001D0AE93600067446 /* Main.storyboard */,
+				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
+				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
 				8B50676A1D221F5600A21EE9 /* MHCityManger.h */,
 				8B50676B1D221F5600A21EE9 /* MHCityManger.m */,
+				8BB8EC181D0B00E5000BDD3C /* MHSelectCity.h */,
+				8BB8EC191D0B00E5000BDD3C /* MHSelectCity.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -224,9 +224,9 @@
 				8BE3E2FA1D0AE93600067446 /* AppDelegate.h */,
 				8BE3E2FB1D0AE93600067446 /* AppDelegate.m */,
 				8BE3E3031D0AE93600067446 /* Assets.xcassets */,
-				8BE3E3051D0AE93600067446 /* LaunchScreen.storyboard */,
 				8BE3E3081D0AE93600067446 /* Info.plist */,
 				8BE3E2F71D0AE93600067446 /* Supporting Files */,
+				8BE0BA0B1D254EE3008718CC /* Launch Screen.storyboard */,
 			);
 			path = MHWeather;
 			sourceTree = "<group>";
@@ -381,8 +381,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE0BA0C1D254EE3008718CC /* Launch Screen.storyboard in Resources */,
 				8BB8EC281D0C70C8000BDD3C /* MHFutuerWeather.xib in Resources */,
-				8BE3E3071D0AE93600067446 /* LaunchScreen.storyboard in Resources */,
 				8BE3E3041D0AE93600067446 /* Assets.xcassets in Resources */,
 				8BA201031D11019E003FCA9F /* MHIndexView.xib in Resources */,
 				8B5067691D2156A500A21EE9 /* MHHeaderView.xib in Resources */,
@@ -518,14 +518,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		8BE3E3051D0AE93600067446 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8BE3E3061D0AE93600067446 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -616,6 +608,7 @@
 			baseConfigurationReference = E58B2982EB6DA480863825FD /* Pods-MHWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHWeather/Info.plist;
@@ -631,6 +624,7 @@
 			baseConfigurationReference = 6511C54C92A16AD9F407F9DD /* Pods-MHWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHWeather/Info.plist;

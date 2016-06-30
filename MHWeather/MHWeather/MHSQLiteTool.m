@@ -40,7 +40,7 @@ static sqlite3 *_db;
         return;
     }else{
         //添加内容
-        [MHSelectCity upDateCityModelWithCityName:@"南昌"];
+        [MHSelectCity upDateCityModelWithCityName:@"深圳"];
         [MHSelectCity upDateCityModelWithCityName:@"北京"];
         [MHSelectCity upDateCityModelWithCityName:@"上海"];
         
@@ -67,7 +67,11 @@ static sqlite3 *_db;
         char *errorMes = NULL;
         sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
     NSLog(@"添加成功:%@",model.name_cn);
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
+    NSMutableArray *array;
+    array = [self searchCityArray];
+    if (array.count > 2) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
+    }
 }
 
 
