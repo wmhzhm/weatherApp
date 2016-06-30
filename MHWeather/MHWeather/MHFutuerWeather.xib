@@ -12,13 +12,6 @@
             <rect key="frame" x="0.0" y="0.0" width="532" height="84"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OVH-bj-3ps">
-                    <rect key="frame" x="0.0" y="0.0" width="532" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="Mx7-qw-UKD"/>
-                    </constraints>
-                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mlA-ff-e88" userLabel="日期">
                     <rect key="frame" x="0.0" y="0.0" width="160" height="42"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -45,11 +38,8 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5a0-M8-r6B">
-                    <rect key="frame" x="297" y="57" width="90" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="90" id="ldZ-Jo-zaI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <rect key="frame" x="227" y="27" width="90" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -57,27 +47,33 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="mlA-ff-e88" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="06d-pE-Ki6"/>
-                <constraint firstItem="OVH-bj-3ps" firstAttribute="leading" secondItem="AhC-Et-AZA" secondAttribute="leading" id="0ci-tK-Flg"/>
                 <constraint firstItem="Sca-Wg-rJe" firstAttribute="leading" secondItem="gJe-9k-k5k" secondAttribute="trailing" constant="10" id="1pz-wf-g19"/>
-                <constraint firstAttribute="bottom" secondItem="5a0-M8-r6B" secondAttribute="bottom" id="27L-Mc-TcO"/>
+                <constraint firstItem="5a0-M8-r6B" firstAttribute="width" secondItem="gJe-9k-k5k" secondAttribute="width" multiplier="3" id="2dw-tQ-zVy"/>
                 <constraint firstItem="Sca-Wg-rJe" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" id="3Ug-Om-R8S"/>
-                <constraint firstItem="5a0-M8-r6B" firstAttribute="top" secondItem="gJe-9k-k5k" secondAttribute="bottom" id="Aea-Rc-bNw"/>
+                <constraint firstItem="gJe-9k-k5k" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" constant="5" id="3Zk-f2-Obh"/>
+                <constraint firstItem="5a0-M8-r6B" firstAttribute="height" secondItem="gJe-9k-k5k" secondAttribute="height" id="4w6-lF-ATU"/>
+                <constraint firstItem="gJe-9k-k5k" firstAttribute="leading" secondItem="5a0-M8-r6B" secondAttribute="trailing" constant="10" id="89j-II-iK0"/>
                 <constraint firstAttribute="bottom" secondItem="39w-yP-EJw" secondAttribute="bottom" id="Ffb-Dc-MBe"/>
-                <constraint firstItem="gJe-9k-k5k" firstAttribute="centerX" secondItem="5a0-M8-r6B" secondAttribute="centerX" id="Hj7-wg-qcQ"/>
-                <constraint firstAttribute="trailing" secondItem="OVH-bj-3ps" secondAttribute="trailing" id="MfF-Do-L9p"/>
+                <constraint firstItem="5a0-M8-r6B" firstAttribute="centerY" secondItem="AhC-Et-AZA" secondAttribute="centerY" id="Kjq-4Z-UCY"/>
                 <constraint firstItem="Sca-Wg-rJe" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="R0V-7m-LVR"/>
                 <constraint firstItem="mlA-ff-e88" firstAttribute="leading" secondItem="AhC-Et-AZA" secondAttribute="leading" id="YNU-6L-3uS"/>
                 <constraint firstItem="gJe-9k-k5k" firstAttribute="centerY" secondItem="AhC-Et-AZA" secondAttribute="centerY" id="YTv-wu-riB"/>
                 <constraint firstItem="39w-yP-EJw" firstAttribute="leading" secondItem="AhC-Et-AZA" secondAttribute="leading" id="eqt-Je-MqU"/>
+                <constraint firstItem="gJe-9k-k5k" firstAttribute="centerY" secondItem="AhC-Et-AZA" secondAttribute="centerY" id="jyI-qm-iX3"/>
                 <constraint firstItem="39w-yP-EJw" firstAttribute="height" secondItem="AhC-Et-AZA" secondAttribute="height" multiplier="0.5" id="k1a-oO-eco"/>
                 <constraint firstAttribute="trailing" secondItem="Sca-Wg-rJe" secondAttribute="trailing" constant="5" id="kmh-9z-mWN"/>
                 <constraint firstAttribute="bottom" secondItem="Sca-Wg-rJe" secondAttribute="bottom" id="lf5-a0-2cF"/>
                 <constraint firstItem="mlA-ff-e88" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" id="oQl-3T-lY9"/>
-                <constraint firstItem="OVH-bj-3ps" firstAttribute="top" secondItem="AhC-Et-AZA" secondAttribute="top" id="oWM-oj-WjL"/>
                 <constraint firstItem="39w-yP-EJw" firstAttribute="width" secondItem="AhC-Et-AZA" secondAttribute="width" multiplier="0.3" id="qaG-4b-a1b"/>
                 <constraint firstItem="mlA-ff-e88" firstAttribute="height" secondItem="AhC-Et-AZA" secondAttribute="height" multiplier="0.5" id="wcL-80-6pG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="3Zk-f2-Obh"/>
+                    <exclude reference="YTv-wu-riB"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="date" destination="mlA-ff-e88" id="TV3-mt-T28"/>
                 <outlet property="temp" destination="Sca-Wg-rJe" id="IGK-XO-C6C"/>
@@ -85,7 +81,7 @@
                 <outlet property="typeLabel" destination="5a0-M8-r6B" id="83f-aZ-Vzg"/>
                 <outlet property="week" destination="39w-yP-EJw" id="frH-yD-Q2p"/>
             </connections>
-            <point key="canvasLocation" x="-103" y="-52"/>
+            <point key="canvasLocation" x="-279" y="-49"/>
         </view>
     </objects>
 </document>

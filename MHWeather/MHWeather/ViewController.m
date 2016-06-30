@@ -24,7 +24,7 @@
 @interface ViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong ,nonatomic) UIScrollView *scrollView;
 @property (strong ,nonatomic) UIPageControl *pageControl;
-@property (strong ,nonatomic) NSArray *cityArray;
+@property (strong ,nonatomic) NSMutableArray *cityArray;
 @property (nonatomic,strong) NSDictionary *leftArr;
 @property (nonatomic,strong) NSDictionary *midArr;
 @property (nonatomic,strong) NSDictionary *rigthArr;
@@ -66,22 +66,30 @@
     [self.view addSubview:_scrollView];
     
     //add PageControl
-    CGRect pageControlFrame = CGRectMake(0, SCREEN_HEIGHT - 30, SCREEN_WIDTH, 30);
+    CGRect pageControlFrame = CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50);
     self.pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
-    self.pageControl.backgroundColor = [UIColor whiteColor];
+    self.pageControl.backgroundColor = [UIColor clearColor];
+    //设置pageControl的数目
+    _pageControl.numberOfPages = _cityArray.count;
+    _pageControl.enabled = NO;
     [self.view addSubview:_pageControl];
+    UIView *fengexian = [[UIView alloc] init];
+    fengexian.frame = CGRectMake(0, 0, SCREEN_WIDTH, 1);
+    fengexian.backgroundColor = [UIColor whiteColor];
+    [_pageControl addSubview:fengexian];
     
     [self loadWeatherView];
     
     
     //测试用btn
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30, 0, 30, 30)];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40, 30, 30)];
     [btn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
     [btn setImage:[UIImage imageNamed:@"search_city_btn"] forState:UIControlStateNormal];
-    [self.pageControl addSubview:btn];
+    [self.view addSubview:btn];
     
     _currentIndex = 0;
     _mDataArray = [NSMutableArray array];
+        //此方法中获取cityArray,并加载pagecontrol的一些信息
     [self getCityArray];
     //设置查询城市观察者
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerCompletion) name:@"RegistreCompletionNotification" object:nil];
@@ -93,14 +101,16 @@
 {
     NSDictionary *dict = notification.userInfo;
     MHCityModel *city = [[MHCityModel alloc] initWithDict:dict];
-    
-    
+    //重新加载—dataArray;
+    [_cityArray removeAllObjects];
+    self.cityArray = [MHSQLiteTool searchCityArray];
+    _pageControl.numberOfPages = _cityArray.count;
     for (int i = 0; i < _cityArray.count; i++) {
         MHCityModel *toCity = _cityArray[i];
         if ([city.name_cn isEqualToString:toCity.name_cn]) {
             //跳转到此索引(i)
             _currentIndex = i;
-            [self changeTableViewAndLoadData];
+            [self getCityArray];
         }
     }
 }
@@ -115,17 +125,15 @@
 -(void)click
 {
     //弹出模态视图选择城市
-//    MHSelectCity * selectCity = [[MHSelectCity alloc]init];
-//    selectCity.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     MHCityManger *view = [self.storyboard instantiateViewControllerWithIdentifier:@"CityManger"];
-//    [self presentViewController:selectCity animated:YES completion:nil];
     [self presentViewController:view animated:YES completion:nil];
 }
 
 
 //获取目前的城市
 - (void)getCityArray{
-    self.cityArray = [[NSArray alloc] init];
+    self.cityArray = [[NSMutableArray alloc] init];
+    [_cityArray removeAllObjects];
     self.cityArray = [MHSQLiteTool searchCityArray];
     //得到所有城市的数据
     [self.mDataArray removeAllObjects];
@@ -154,6 +162,7 @@
                     NSString *cityName = [[_dataArray[i] objectForKey:@"retData"] objectForKey:@"city"];
                 if ([cityName isEqualToString:model.name_cn]) {
                     [array addObject:_dataArray[i]];
+                    break;
                     }
                 }
             }
@@ -168,18 +177,18 @@
 - (void)loadWeatherView
 {
     //创建TableView
-    self.leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
-    self.midTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
-    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 30)];
+    self.leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
+    self.midTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
+    self.rightTableView = [[UITableView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50)];
     
     //创建TableHeaderView
     _leftHeadView = [MHHeaderView headView];
     _midHeadView = [MHHeaderView headView];
     _rightHeadView = [MHHeaderView headView];
     
-    _leftHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    _midHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    _rightHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _leftHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50);
+    _midHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50);
+    _rightHeadView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 50);
 
     
     [_leftTableView setTableHeaderView:_leftHeadView];
@@ -190,12 +199,18 @@
     _leftTableView.delegate = self;
     _leftTableView.dataSource = self;
     _leftTableView.backgroundColor = [UIColor clearColor];
+    _leftTableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    _leftTableView.pagingEnabled = YES;
     _midTableView.delegate = self;
     _midTableView.dataSource = self;
     _midTableView.backgroundColor = [UIColor clearColor];
+    _midTableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    _midTableView.pagingEnabled = YES;
     _rightTableView.delegate = self;
     _rightTableView.dataSource = self;
     _rightTableView.backgroundColor = [UIColor clearColor];
+    _rightTableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    _rightTableView.pagingEnabled = YES;
     
     [self.scrollView addSubview:self.leftTableView];
     [self.scrollView addSubview:self.midTableView];
@@ -264,6 +279,7 @@
         
         self.scrollView.contentOffset = CGPointMake(ScrollTableWidth, 0);
     }
+    _pageControl.currentPage = _currentIndex;
 }
 - (NSString *)currentCityWithDict:(NSDictionary *)dict
 {
@@ -314,38 +330,7 @@
            futureWeatherArray = [mFutuerWeatherArray copy];
     return futureWeatherArray;
 }
-//- (void)changeTableViewAndLoadData{
-//    //index = 0 情况，只需要刷新左边tableView和中间tableView
-//    if (_currentIndex == 0) {
-//        _leftArr = self.tabArr[_currentIndex];
-//        _midArr = self.tabArr[_currentIndex +1];
-//        
-//        [_leftTable reloadData];
-//        [_midTable reloadData];
-//        
-//        self.scrollView.contentOffset = CGPointMake(0, 0);
-//        
-//        //index 是为最后的下标时，刷新右边tableView 和 中间 tableView
-//    }else if(_currentIndex == _tabArr.count - 1){
-//        _rigthArr = self.tabArr[_currentIndex];
-//        _midArr = self.tabArr[_currentIndex - 1];
-//        [_rightTable reloadData];
-//        [_midTable reloadData];
-//        
-//        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth*2, 0);
-//        //除了上边两种情况，三个tableView 都要刷新，为了左右移动时都能够显示数据
-//    }else{
-//        _rigthArr = self.tabArr[_currentIndex+1];
-//        _midArr = self.tabArr[_currentIndex];
-//        _leftArr = self.tabArr[_currentIndex - 1];
-//        
-//        [_rightTable reloadData];
-//        [_midTable reloadData];
-//        [_leftTable reloadData];
-//        
-//        self.scrollView.contentOffset = CGPointMake(ScrollTableWidth, 0);
-//    }
-//}
+
 #pragma mark - scrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -376,6 +361,7 @@
         }
 //        _scroll.index = _currentIndex;
     }
+    _pageControl.currentPage = _currentIndex;
     [self indexForEnable:_currentIndex];
     [self changeTableViewAndLoadData];
 
@@ -384,24 +370,12 @@
 
 
 #pragma mark - tableView Delegate and Datasources
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return SCREEN_HEIGHT;
-//}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    static NSString *ID = @"cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-//    if (!cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//        cell.backgroundColor = [UIColor clearColor];
-//        cell.textLabel.textColor = [UIColor whiteColor];
-//    }
-    
         MHFutuerWeather *cell = [MHFutuerWeather futureWeatherCellWithTableView:tableView];
-    
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (tableView == _leftTableView) {
         MHFutuerWeatherModel *model = [self futureWeatherArrayWithDict:_leftArr][indexPath.row];
+        
         cell.futureWeather = model;
 
     }
@@ -429,4 +403,6 @@
     }
     return 0;
 }
+
+
 @end

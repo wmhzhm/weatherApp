@@ -59,11 +59,11 @@ NSInteger row = -1;
                            }];
 }
 
-- (void)sendNotificationWithDict:(NSDictionary *)dictionary
-{
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:dictionary];
-}
+//- (void)sendNotificationWithDict:(NSDictionary *)dictionary
+//{
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:dictionary];
+//}
 
 + (void)upDateCityModelWithCityName:(NSString *)city
 {

@@ -70,7 +70,16 @@ static sqlite3 *_db;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegistreCompletionNotification" object:nil userInfo:nil];
 }
 
-+ (NSArray *)searchCityArray
+
++ (void)deleteCityWithModel:(MHCityModel *)model
+{
+    NSString *sql = [NSString stringWithFormat:@"delete from t_city where cityID = %ld",(long)model.area_id];
+    char *errorMes = NULL;
+    sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    NSLog(@"删除成功:%@",model.name_cn);
+}
+
++ (NSMutableArray *)searchCityArray
 {
     NSMutableArray *citys = nil;
     //定义sql语句

@@ -13,8 +13,8 @@
 
 @interface MHSQLiteTool : NSObject
 
-
++ (void)deleteCityWithModel:(MHCityModel *)model;
 + (void)createTable:(const char *)sql named:(NSString *)tableName;
 + (void)addCityWithCityModel:(MHCityModel *)model;
-+ (NSArray *)searchCityArray;
++ (NSMutableArray *)searchCityArray;
 @end

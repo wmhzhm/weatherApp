@@ -40,7 +40,7 @@
     if (cell == nil) {
         NSArray *nibs = [[NSBundle mainBundle]loadNibNamed:@"MHFutuerWeather" owner:nil options:nil];
         cell = [nibs firstObject];
-        cell.backgroundColor = [UIColor blackColor];
+        cell.backgroundColor = [UIColor clearColor];
     }
     return cell;
 }
