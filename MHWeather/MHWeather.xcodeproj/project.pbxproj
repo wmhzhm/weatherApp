@@ -11,7 +11,6 @@
 		8B5067671D21554600A21EE9 /* MHHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5067661D21554600A21EE9 /* MHHeaderView.m */; };
 		8B5067691D2156A500A21EE9 /* MHHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5067681D2156A500A21EE9 /* MHHeaderView.xib */; };
 		8B50676C1D221F5600A21EE9 /* MHCityManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B50676B1D221F5600A21EE9 /* MHCityManger.m */; };
-		8B5C83851D1F814400D676A4 /* MHWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83831D1F814400D676A4 /* MHWeatherView.m */; };
 		8B5C83891D1FCD9A00D676A4 /* MHSQLiteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */; };
 		8B5C838B1D1FD69100D676A4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */; };
 		8BA201011D110187003FCA9F /* MHIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA201001D110187003FCA9F /* MHIndexView.m */; };
@@ -62,8 +61,6 @@
 		8B5067681D2156A500A21EE9 /* MHHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHHeaderView.xib; sourceTree = "<group>"; };
 		8B50676A1D221F5600A21EE9 /* MHCityManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHCityManger.h; sourceTree = "<group>"; };
 		8B50676B1D221F5600A21EE9 /* MHCityManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHCityManger.m; sourceTree = "<group>"; };
-		8B5C83821D1F814400D676A4 /* MHWeatherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWeatherView.h; sourceTree = "<group>"; };
-		8B5C83831D1F814400D676A4 /* MHWeatherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWeatherView.m; sourceTree = "<group>"; };
 		8B5C83871D1FCD9A00D676A4 /* MHSQLiteTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSQLiteTool.h; sourceTree = "<group>"; };
 		8B5C83881D1FCD9A00D676A4 /* MHSQLiteTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSQLiteTool.m; sourceTree = "<group>"; };
 		8B5C838A1D1FD69100D676A4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -178,8 +175,6 @@
 		8BB8EC171D0B008A000BDD3C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8B5C83821D1F814400D676A4 /* MHWeatherView.h */,
-				8B5C83831D1F814400D676A4 /* MHWeatherView.m */,
 				8BE3E3001D0AE93600067446 /* Main.storyboard */,
 				8BE3E2FD1D0AE93600067446 /* ViewController.h */,
 				8BE3E2FE1D0AE93600067446 /* ViewController.m */,
@@ -344,7 +339,7 @@
 				TargetAttributes = {
 					8BE3E2F31D0AE93500067446 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 8PD52R9977;
+						DevelopmentTeam = JSRP5TAWRX;
 					};
 					8BE3E30C1D0AE93600067446 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -473,7 +468,6 @@
 				8BB8EC2E1D0C735C000BDD3C /* MHFutuerWeatherModel.m in Sources */,
 				8BB8EC2B1D0C70E0000BDD3C /* MHFutuerWeather.m in Sources */,
 				8BB8EC1A1D0B00E5000BDD3C /* MHSelectCity.m in Sources */,
-				8B5C83851D1F814400D676A4 /* MHWeatherView.m in Sources */,
 				8BB8EC261D0C0E56000BDD3C /* MHIndexModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,7 +533,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Minghan Wu (JSRP5TAWRX)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -561,6 +556,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -583,7 +579,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Minghan Wu (JSRP5TAWRX)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -598,6 +595,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -613,7 +611,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.MHWeather";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wmh.MHWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -629,7 +627,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MHWeather/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "-.MHWeather";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wmh.MHWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

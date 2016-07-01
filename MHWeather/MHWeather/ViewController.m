@@ -13,11 +13,13 @@
 #import "MHFutuerWeather.h"
 #import "MHIndexModel.h"
 #import "MHIndexView.h"
-#import "MHWeatherView.h"
 #import "MHSQLiteTool.h"
 #import "MHSelectCity.h"
 #import "MHHeaderView.h"
 #import "MHCityManger.h"
+
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
 #define ScrollTableWidth [UIScreen mainScreen].bounds.size.width
 #define ScrollTableHeight [UIScreen mainScreen].bounds.size.height
